@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RadioFrequencyCenter" Class="RadioFrequencyCenterDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=FORGE-JITA\SQLEXPRESS2014;Initial Catalog=RadioFrequencyCenter;Integrated Security=True;Pooling=False" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RadioFrequencyCenterConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BroadcastStations" Member="BroadcastStations">
+    <Type Name="BroadcastStations">
+      <Column Name="ID_RES" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ZAV_NUM" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="NUM_SVID" Type="System.String" DbType="VarChar(32)" CanBeNull="true" />
+      <Column Name="DATE_SVID" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="SROK_SVID" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="REGION" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="LAT" Type="System.String" DbType="VarChar(8)" CanBeNull="true" />
+      <Column Name="LONG" Type="System.String" DbType="VarChar(8)" CanBeNull="true" />
+      <Column Name="IDS" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="MAC" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="DEL_DATE" Type="System.DateTimeOffset" DbType="DateTimeOffset" CanBeNull="true" />
+      <Column Name="UPDATE_DATE" Type="System.DateTimeOffset" DbType="DateTimeOffset" CanBeNull="true" />
+      <Association Name="BroadcastStation_BroadcastFrequency" Member="BroadcastFrequencies" ThisKey="ID_RES" OtherKey="RES" Type="BroadcastFrequencies" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BroadcastFrequencies" Member="BroadcastFrequencies">
+    <Type Name="BroadcastFrequencies">
+      <Column Name="ID_F" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RES" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="TN" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="RN" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Association Name="BroadcastStation_BroadcastFrequency" Member="BroadcastStations" Storage="_BroadcastStation" ThisKey="RES" OtherKey="ID_RES" Type="BroadcastStations" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
