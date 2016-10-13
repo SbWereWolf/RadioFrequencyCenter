@@ -97,10 +97,12 @@ WHERE
 
             var connectionsStrings = System.Configuration.ConfigurationManager.ConnectionStrings;
             var dbConnectionString = string.Empty;
-            if (connectionsStrings != null)
+
+            const string actualBdSettingName = "FORGE-JITA";
+            var connectionStringSettings = connectionsStrings?[actualBdSettingName ];
+            if (connectionStringSettings != null)
             {
-                // const int firstElement = 0;
-                dbConnectionString = connectionsStrings[1].ConnectionString;
+                dbConnectionString = connectionStringSettings.ConnectionString;
             }
 
             var dbConnection = new SqlConnection();

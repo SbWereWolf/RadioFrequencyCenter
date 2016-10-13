@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadioFrequencyCenter.Downloader", "RadioFrequencyCenter.Downloader\RadioFrequencyCenter.Downloader.csproj", "{8F82E66C-3BC5-43A3-8CE2-32A088266946}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadioFrequencyCenter.DataSource", "RadioFrequencyCenter.DataSource\RadioFrequencyCenter.DataSource.csproj", "{903C882D-65EA-470E-8F84-A64355C8EB89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadioFrequencyCenter.DataBrowser", "RadioFrequencyCenter.DataBrowser\RadioFrequencyCenter.DataBrowser.csproj", "{E6989CFD-84F3-4A4F-9F86-4F97FD9ED1BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8F82E66C-3BC5-43A3-8CE2-32A088266946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F82E66C-3BC5-43A3-8CE2-32A088266946}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F82E66C-3BC5-43A3-8CE2-32A088266946}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F82E66C-3BC5-43A3-8CE2-32A088266946}.Release|Any CPU.Build.0 = Release|Any CPU
 		{903C882D-65EA-470E-8F84-A64355C8EB89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{903C882D-65EA-470E-8F84-A64355C8EB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{903C882D-65EA-470E-8F84-A64355C8EB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{903C882D-65EA-470E-8F84-A64355C8EB89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6989CFD-84F3-4A4F-9F86-4F97FD9ED1BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6989CFD-84F3-4A4F-9F86-4F97FD9ED1BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6989CFD-84F3-4A4F-9F86-4F97FD9ED1BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6989CFD-84F3-4A4F-9F86-4F97FD9ED1BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
