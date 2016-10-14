@@ -101,7 +101,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		
 		private System.Nullable<System.DateTime> _SROK_SVID;
 		
-		private System.Nullable<float> _REGION;
+		private System.Nullable<double> _REGION;
 		
 		private string _LAT;
 		
@@ -131,7 +131,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
     partial void OnDATE_SVIDChanged();
     partial void OnSROK_SVIDChanging(System.Nullable<System.DateTime> value);
     partial void OnSROK_SVIDChanged();
-    partial void OnREGIONChanging(System.Nullable<float> value);
+    partial void OnREGIONChanging(System.Nullable<double> value);
     partial void OnREGIONChanged();
     partial void OnLATChanging(string value);
     partial void OnLATChanged();
@@ -254,7 +254,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_REGION", DbType="Real")]
-		public System.Nullable<float> REGION
+		public System.Nullable<double> REGION
 		{
 			get
 			{
@@ -393,7 +393,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStation_BroadcastFrequency", Storage="_BroadcastFrequencies", ThisKey="ID_RES", OtherKey="RES")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_BroadcastFrequencies", Storage="_BroadcastFrequencies", ThisKey="ID_RES", OtherKey="RES")]
 		public EntitySet<BroadcastFrequencies> BroadcastFrequencies
 		{
 			get
@@ -559,7 +559,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStation_BroadcastFrequency", Storage="_BroadcastStation", ThisKey="RES", OtherKey="ID_RES", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_BroadcastFrequencies", Storage="_BroadcastStation", ThisKey="RES", OtherKey="ID_RES", IsForeignKey=true)]
 		public BroadcastStations BroadcastStations
 		{
 			get

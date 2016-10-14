@@ -20,10 +20,10 @@ namespace RadioFrequencyCenter.DataSource
         {
             List<ElectronicDeviceRecord> devisesRecords = null;
 
-            var isEmptyFromDate = false;
-            var isEmptyTillDate = false;
+            var isEmptyFromDate = true;
+            var isEmptyTillDate = true;
 
-            var isEmptyCriteria = false;
+            var isEmptyCriteria = true;
             var isFullCriteria = false;
 
             var isEmptyCriteriaObject = selectionCriteria == null;

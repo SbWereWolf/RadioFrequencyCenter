@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadioFrequencyCenter.DataSource", "RadioFrequencyCenter.DataSource\RadioFrequencyCenter.DataSource.csproj", "{903C882D-65EA-470E-8F84-A64355C8EB89}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadioFrequencyCenter.DataBrowser", "RadioFrequencyCenter.DataBrowser\RadioFrequencyCenter.DataBrowser.csproj", "{E6989CFD-84F3-4A4F-9F86-4F97FD9ED1BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{903C882D-65EA-470E-8F84-A64355C8EB89} = {903C882D-65EA-470E-8F84-A64355C8EB89}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
