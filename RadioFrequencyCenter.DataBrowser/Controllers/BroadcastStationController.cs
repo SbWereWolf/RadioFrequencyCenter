@@ -31,11 +31,15 @@ namespace RadioFrequencyCenter.DataBrowser.Controllers
         {
             return RedirectToAction("AllRecords", "BroadcastStation");
         }
-        public ActionResult BroadcastStationRecord(string id)
+        public ActionResult RecordPage(string id)
         {
             var broadcastStation = BroadcastStation.GetRecord(id);
             return View(broadcastStation);
-
+        }
+        public ActionResult RecordPopup(string id)
+        {
+            var broadcastStation = BroadcastStation.GetRecord(id);
+            return View(broadcastStation);
         }
     }
 }

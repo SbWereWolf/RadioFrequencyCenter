@@ -1,7 +1,7 @@
 ﻿@model IList<RadioFrequencyCenter.DataBrowser.Models.BroadcastStation>
 
 @{
-    if (ViewBag != null )
+    if (ViewBag != null)
     {
         ViewBag.Title = "AllRecords";
     }
@@ -33,62 +33,62 @@
         {
             <table class="table table-condensed table-hover table-bordered">
                 <thead>
-                    <tr>
-                        <th class="ViewBroadcastStationRecord">
-                            Частоты
-                        </th>
-                        <th class="DateSvid">
-                            DateSvid
-                        </th>
-                        <th class="Lat">
-                            Lat
-                        </th>
-                        <th class="Long">
-                            Long
-                        </th>
-                        <th class="Mac">
-                            Mac
-                        </th>
-                        <th class="NumSvid">
-                            NumSvid
-                        </th>
-                        <th class="Region">
-                            Region
-                        </th>
-                        <th class="SrokSvid">
-                            SrokSvid
-                        </th>
-                        <th class="UpdateDate">
-                            UpdateDate
-                        </th>
-                        <th class="ZavNum">
-                            ZavNum
-                        </th>
-                        <th class="DelDate">
-                            DelDate
-                        </th>
-                        <th class="IdRes">
-                            IdRes
-                        </th>
-                        <th class="Ids">
-                            Ids
-                        </th>
-                    </tr>
+                <tr>
+                    <th class="ViewBroadcastStationRecord">
+                        Частоты
+                    </th>
+                    <th class="DateSvid">
+                        DateSvid
+                    </th>
+                    <th class="Lat">
+                        Lat
+                    </th>
+                    <th class="Long">
+                        Long
+                    </th>
+                    <th class="Mac">
+                        Mac
+                    </th>
+                    <th class="NumSvid">
+                        NumSvid
+                    </th>
+                    <th class="Region">
+                        Region
+                    </th>
+                    <th class="SrokSvid">
+                        SrokSvid
+                    </th>
+                    <th class="UpdateDate">
+                        UpdateDate
+                    </th>
+                    <th class="ZavNum">
+                        ZavNum
+                    </th>
+                    <th class="DelDate">
+                        DelDate
+                    </th>
+                    <th class="IdRes">
+                        IdRes
+                    </th>
+                    <th class="Ids">
+                        Ids
+                    </th>
+                </tr>
 
                 </thead>
                 <tbody>
-                    @foreach (var record in Model)
+                @foreach (var record in Model)
                 {
                     if (record == null)
                     {
                         continue;
                     }
                     <tr>
-                        <td class="ViewBroadcastStationRecord">
-                            @if (Url != null)
-                            {
-                                @Html.ActionLink("Просмотр", "BroadcastStationRecord", new { id = record.IdRes.ToString(), controller = "BroadcastStation", action = "BroadcastStationRecord" })
-                            }
+                        <td class="RecordPage">
+                            <div class="btn-group-sm">
+                                @Html.ActionLink("Открыть", "RecordPage", new {id = record.IdRes.ToString(), controller = "BroadcastStation"}, new {@class = "btn btn-info"})
+                                <span class="btn btn-info" onclick="showPopup('/BroadcastStation/RecordPopup/@record.IdRes');">Просмотр</span>
+                            </div>
                         </td>
                         <td class="DateSvid">
                             @record.DateSvid
@@ -127,9 +127,11 @@
                             @record.Ids
                         </td>
                     </tr>
-                    }
+                }
                 </tbody>
             </table>
         }
     }
 </div>
+    
+<div id="PopupWrapper"></div>
