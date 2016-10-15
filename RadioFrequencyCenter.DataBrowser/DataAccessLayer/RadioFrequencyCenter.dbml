@@ -21,8 +21,8 @@
     <Type Name="BroadcastFrequencies">
       <Column Name="ID_F" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="RES" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="TN" Type="System.Single" DbType="Real" CanBeNull="true" />
-      <Column Name="RN" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="TN" Type="System.Double" DbType="Real" CanBeNull="true" />
+      <Column Name="RN" Type="System.Double" DbType="Real" CanBeNull="true" />
       <Association Name="BroadcastStations_BroadcastFrequencies" Member="BroadcastStations" Storage="_BroadcastStation" ThisKey="RES" OtherKey="ID_RES" Type="BroadcastStations" IsForeignKey="true" />
     </Type>
   </Table>

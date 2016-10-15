@@ -167,7 +167,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BroadcastStationsController.cs" />
+    <Compile Include="Controllers\BroadcastStationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DataAccessLayer\BroadcastFrequenciesRepository.cs" />
     <Compile Include="DataAccessLayer\BroadcastStationsRepository.cs" />
@@ -175,6 +175,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BroadcastFrequency.cs" />
+    <Compile Include="Proxy\BroadcastFrequencies.cs" />
     <Compile Include="Proxy\BroadcastStations.cs" />
     <Compile Include="Models\BroadcastStations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -268,7 +270,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\BroadcastStations\AllRecords.cshtml" />
+    <Content Include="Views\BroadcastStation\AllRecords.cshtml" />
     <None Include="Service References\MeasurementsApiService\RadioFrequencyCenter.DataSource.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -279,6 +281,7 @@
     <None Include="Service References\MeasurementsApiService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\BroadcastStation\BroadcastStationRecord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

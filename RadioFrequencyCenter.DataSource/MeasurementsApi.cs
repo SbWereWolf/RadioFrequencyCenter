@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-
 
 namespace RadioFrequencyCenter.DataSource
 {
@@ -95,7 +95,7 @@ WHERE
 ";
             }
 
-            var connectionsStrings = System.Configuration.ConfigurationManager.ConnectionStrings;
+            var connectionsStrings = ConfigurationManager.ConnectionStrings;
             var dbConnectionString = string.Empty;
 
             const string actualBdSettingName = "FORGE-JITA";

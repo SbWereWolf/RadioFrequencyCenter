@@ -6,25 +6,17 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 {
     public class BroadcastFrequenciesRepository : Repository
     {
-
-        public IQueryable<BroadcastFrequencies> BroadcastFrequencies
+        public BroadcastFrequenciesRepository()
         {
-            get
-            {
-                Table<BroadcastFrequencies> result = null;
-                if (RepositoryData != null)
-                {
-                    result = RepositoryData.BroadcastFrequencies;
-
-                }
-                return result;
-            }
+            BroadcastFrequencies = RepositoryData?.BroadcastFrequencies;
         }
+
+        public Table<BroadcastFrequencies> BroadcastFrequencies { get; }
 
         public bool InsertFrequency(BroadcastFrequencies instance)
         {
             var result = false;
-            var frequencies = RepositoryData?.BroadcastFrequencies;
+            var frequencies = BroadcastFrequencies;
             var context = frequencies?.Context;
             if (instance != null && context != null)
             {
@@ -46,7 +38,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
         public bool UpdateFrequency(BroadcastFrequencies instance)
         {
             var result = false;
-            var frequencies = RepositoryData?.BroadcastFrequencies;
+            var frequencies = BroadcastFrequencies;
             var context = frequencies?.Context;
             if (instance != null && context != null)
             {
@@ -75,7 +67,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
         {
             var result = false;
 
-            var frequencies = RepositoryData?.BroadcastFrequencies;
+            var frequencies = BroadcastFrequencies;
             var context = frequencies?.Context;
             if (context != null)
             {

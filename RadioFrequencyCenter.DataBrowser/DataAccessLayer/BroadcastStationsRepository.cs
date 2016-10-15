@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Linq;
 using System.Linq;
 
 namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
@@ -7,15 +8,15 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
     {
         public BroadcastStationsRepository ()
         {
-            this.BroadcastStations = RepositoryData?.BroadcastStations;
+            BroadcastStations = RepositoryData?.BroadcastStations;
         }
 
-        public IQueryable<BroadcastStations> BroadcastStations { get; set; }
+        public Table<BroadcastStations> BroadcastStations { get; }
 
         public bool InsertStation(BroadcastStations instance)
         {
             var result = false;
-            var stations = RepositoryData?.BroadcastStations;
+            var stations = BroadcastStations;
             var context = stations?.Context;
 
             if (instance != null && context != null)
@@ -40,7 +41,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
         public bool UpdateStation(BroadcastStations instance)
         {
             var result = false;
-            var stations = RepositoryData?.BroadcastStations;
+            var stations = BroadcastStations;
             var context = stations?.Context;
             if (instance != null && context != null)
             {
@@ -76,7 +77,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
         {
             var result = false;
 
-            var stations = RepositoryData?.BroadcastStations;
+            var stations = BroadcastStations;
             var context = stations?.Context;
             if (context != null)
             {

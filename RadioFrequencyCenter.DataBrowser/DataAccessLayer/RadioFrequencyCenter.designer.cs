@@ -449,9 +449,9 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		
 		private long _RES;
 		
-		private System.Nullable<float> _TN;
+		private System.Nullable<double> _TN;
 		
-		private System.Nullable<float> _RN;
+		private System.Nullable<double> _RN;
 		
 		private EntityRef<BroadcastStations> _BroadcastStation;
 		
@@ -463,9 +463,9 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
     partial void OnID_FChanged();
     partial void OnRESChanging(long value);
     partial void OnRESChanged();
-    partial void OnTNChanging(System.Nullable<float> value);
+    partial void OnTNChanging(System.Nullable<double> value);
     partial void OnTNChanged();
-    partial void OnRNChanging(System.Nullable<float> value);
+    partial void OnRNChanging(System.Nullable<double> value);
     partial void OnRNChanged();
     #endregion
 		
@@ -520,7 +520,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TN", DbType="Real")]
-		public System.Nullable<float> TN
+		public System.Nullable<double> TN
 		{
 			get
 			{
@@ -540,7 +540,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RN", DbType="Real")]
-		public System.Nullable<float> RN
+		public System.Nullable<double> RN
 		{
 			get
 			{

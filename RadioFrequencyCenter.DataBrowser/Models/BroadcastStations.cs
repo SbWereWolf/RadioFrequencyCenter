@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Ajax.Utilities;
+using RadioFrequencyCenter.DataBrowser.MeasurementsApiService;
 using RadioFrequencyCenter.DataBrowser.Proxy;
 
 namespace RadioFrequencyCenter.DataBrowser.Models
@@ -31,19 +33,21 @@ namespace RadioFrequencyCenter.DataBrowser.Models
 
         public DateTimeOffset? UpdateDate { get; private set; }
 
+        public BroadcastFrequency[] Frequencies { get; set; }
+
         public static List<BroadcastStation> GetAllRecords()
         {
-            var repository = new Proxy.BroadcastStations();
+            var repository = new BroadcastStations();
             var repositoryData = repository.GetData();
 
-            var allRecords = new List<Models.BroadcastStation>();
+            var allRecords = new List<BroadcastStation>();
             if (repositoryData != null)
             {
                 foreach (var repositoryRecord in repositoryData)
                 {
                     if (repositoryRecord != null)
                     {
-                        var record = new Models.BroadcastStation
+                        var record = new BroadcastStation
                         {
                             DateSvid = repositoryRecord.DATE_SVID,
                             DelDate = repositoryRecord.DATE_SVID,
@@ -65,10 +69,73 @@ namespace RadioFrequencyCenter.DataBrowser.Models
             return allRecords;
         }
 
+        public static BroadcastStation GetRecord(string recordId )
+        {
+            long id;
+            var isIdDefined = long.TryParse(recordId, out id);
+            BroadcastStation record = null;
+            
+            DataAccessLayer.BroadcastStations station = null;
+            if (isIdDefined)
+            {
+                var repository = new BroadcastStations();
+                var repositoryData = repository.Repository?.BroadcastStations?.Where(r => r.ID_RES == id).ToArray();
+                if (repositoryData?.Length > 0)
+                {
+                    const long firstIndex = 0;
+                    station = repositoryData[firstIndex];
+                }
+            }
+
+            if (station != null)
+            {
+                record = new BroadcastStation
+                {
+                    DateSvid = station.DATE_SVID,
+                    DelDate = station.DATE_SVID,
+                    IdRes = station.ID_RES,
+                    Ids = station.IDS,
+                    Lat = station.LAT,
+                    Long = station.LONG,
+                    Mac = station.MAC,
+                    NumSvid = station.NUM_SVID,
+                    Region = station.REGION,
+                    SrokSvid = station.SROK_SVID,
+                    UpdateDate = station.UPDATE_DATE,
+                    ZavNum = station.ZAV_NUM,
+                    //Frequencies = frequencies
+                };
+            }
+            List<BroadcastFrequency> frequencies = new List<BroadcastFrequency>();
+            if (station?.BroadcastFrequencies != null)
+            {
+                List<DataAccessLayer.BroadcastFrequencies> frequenciesRecords = station.BroadcastFrequencies.ToList();
+                foreach (var frequencyRecord in frequenciesRecords)
+                {
+                    if (frequencyRecord != null)
+                    {
+                        var broadcastFrequency = new BroadcastFrequency
+                        {
+                            Res = frequencyRecord.RES,
+                            IdF = frequencyRecord.ID_F,
+                            Rn = frequencyRecord.RN,
+                            Tn = frequencyRecord.TN
+                        };
+                        frequencies.Add(broadcastFrequency);
+                    }
+                }
+            }
+            if (record != null)
+            {
+                record.Frequencies = frequencies.ToArray();
+            }
+            return record;
+        }
+
         public static bool DownloadAllRecords()
         {
             var result = false;
-            var apiClient = new MeasurementsApiService.MeasurementsApiClient();
+            var apiClient = new MeasurementsApiClient();
             var rawRecords = apiClient.GetElectronicDevicesData(null);
 
             BroadcastStations proxy = null;
@@ -86,7 +153,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                         {
                             DATE_SVID = rawRecord.CertificateIssueDate,
                             DEL_DATE = rawRecord.DelDate,
-                            IDS = $" Bsid : {rawRecord.Bsid} + Ci : {rawRecord.Ci} + Lac : {rawRecord.Lac}",
+                            IDS = $" Bsid : {rawRecord.Bsid} ; Ci : {rawRecord.Ci} ; Lac : {rawRecord.Lac} ; ",
                             LAT = rawRecord.LocationLattitude,
                             LONG = rawRecord.LocationLongitude,
                             MAC = rawRecord.Mac,

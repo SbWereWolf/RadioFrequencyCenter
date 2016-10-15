@@ -1,0 +1,91 @@
+﻿@model RadioFrequencyCenter.DataBrowser.Models.BroadcastStation
+
+@{
+    if (ViewBag != null)
+    {
+        ViewBag.Title = "BroadcastFrequency";
+    }
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Station and Broadcast Frequency</h1>
+
+<p>
+    <div class="btn-group btn-group-lg">
+        @Html.ActionLink("на главную", "Index", "Home", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Работа с записями", "AllRecords", "BroadcastStation", null, new { @class = "btn btn-primary" })
+    </div>
+</p>
+
+
+@{
+    var isEmptyReocordSet = Model == null;
+    if (isEmptyReocordSet)
+    {
+        @Html.Label("no data")
+    }
+    else
+    {
+        var record = Model;
+        <div class="body-content">
+            <p class="panel">DateSvid <mark >@record.DateSvid</mark></p>
+            <p class="panel">DelDate <mark >@record.DelDate</mark></p>
+            <p class="panel">IdRes <mark >@record.IdRes</mark></p>
+            <p class="panel">Ids <mark >@record.Ids</mark></p>
+            <p class="panel">Lat <mark >@record.Lat</mark></p>
+            <p class="panel">Long <mark >@record.Long</mark></p>
+            <p class="panel">Mac <mark >@record.Mac</mark></p>
+            <p class="panel">NumSvid <mark >@record.NumSvid</mark></p>
+            <p class="panel">Region <mark >@record.Region</mark></p>
+            <p class="panel">SrokSvid <mark >@record.SrokSvid</mark></p>
+            <p class="panel">UpdateDate <mark >@record.UpdateDate</mark></p>
+            <p class="panel">ZavNum <mark >@record.ZavNum</mark></p>
+            @if (record.Frequencies != null)
+            {
+                <table class="table table-condensed table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="Res">
+                            Res
+                        </th>
+                        <th class="IdF">
+                            IdF
+                        </th>
+                        <th class="Rn">
+                            Rn
+                        </th>
+                        <th class="Tn">
+                            Tn
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var frequency in record.Frequencies)
+                    {
+                        if (frequency != null)
+                        {
+                            <tr >
+                                <td class="Res">
+                                    @frequency.Res
+                                </td>
+                                <td class="IdF">
+                                    @frequency.IdF
+                                </td>
+                                <td class="Rn">
+                                    @frequency.Rn
+                                </td>
+                                <td class="Tn">
+                                    @frequency.Tn
+                                </td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            }
+        </div>
+
+
+    }
+}

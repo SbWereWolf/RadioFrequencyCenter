@@ -8,7 +8,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
     {
         public BroadcastStations()
         {
-            var broadcastStationsRepository = new DataAccessLayer.BroadcastStationsRepository();
+            var broadcastStationsRepository = new BroadcastStationsRepository();
             Repository = broadcastStationsRepository;
         }
 
@@ -17,10 +17,9 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
         public DataAccessLayer.BroadcastStations[] GetData()
         {
             DataAccessLayer.BroadcastStations[] data = null;
-            if (Repository?.RepositoryData?.BroadcastStations != null)
+            if (Repository?.BroadcastStations != null)
             {
-                data = Repository.RepositoryData.BroadcastStations.ToArray();
-                
+                data = Repository.BroadcastStations.ToArray();
             }
             return data;
         }
@@ -28,15 +27,23 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
         public bool DeleteAll()
         {
             var result = false;
-            var broadcastStations  = Repository?.RepositoryData?.BroadcastStations;
-            var context = broadcastStations?.Context;
-            if ( context != null )
+
+            var broadcastStations  = Repository?.BroadcastStations;
+            var stationsContext = broadcastStations?.Context;
+
+            var frequencies = new BroadcastFrequencies();
+            var broadcastFrequencies = frequencies.Repository?.BroadcastFrequencies;
+            var frequenciesContext = broadcastFrequencies?.Context;
+
+            if (stationsContext != null && frequenciesContext != null )
             {
+                broadcastFrequencies.DeleteAllOnSubmit(broadcastFrequencies.ToArray());
                 broadcastStations.DeleteAllOnSubmit(broadcastStations.ToArray());
 
                 try
                 {
-                    context.SubmitChanges();
+                    frequenciesContext.SubmitChanges();
+                    stationsContext.SubmitChanges();
                     result = true;
                 }
                 catch (Exception)

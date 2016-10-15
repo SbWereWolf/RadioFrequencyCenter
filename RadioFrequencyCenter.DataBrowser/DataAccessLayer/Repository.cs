@@ -6,6 +6,7 @@
         {
             RepositoryData = new RadioFrequencyCenterDataContext();
         }
-        public RadioFrequencyCenterDataContext RepositoryData { get; }
+
+        protected RadioFrequencyCenterDataContext RepositoryData { get; }
     }
 }

@@ -8,28 +8,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.CodeDom.Compiler;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Threading.Tasks;
+
 namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
-    using System.Runtime.Serialization;
-    using System;
-    
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ElectronicDevicesSelectionCriteria", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
-    [System.SerializableAttribute()]
-    public partial class ElectronicDevicesSelectionCriteria : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    [DebuggerStepThrough()]
+    [GeneratedCode("System.Runtime.Serialization", "4.0.0.0")]
+    [DataContract(Name="ElectronicDevicesSelectionCriteria", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
+    [Serializable()]
+    public partial class ElectronicDevicesSelectionCriteria : object, IExtensibleDataObject, INotifyPropertyChanged {
         
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        [NonSerialized()]
+        private ExtensionDataObject extensionDataField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> DateFromField;
+        [OptionalField()]
+        private Nullable<DateTime> DateFromField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> DateTillField;
+        [OptionalField()]
+        private Nullable<DateTime> DateTillField;
         
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+        [Browsable(false)]
+        public ExtensionDataObject ExtensionData {
             get {
                 return this.extensionDataField;
             }
@@ -38,8 +43,8 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> DateFrom {
+        [DataMember()]
+        public Nullable<DateTime> DateFrom {
             get {
                 return this.DateFromField;
             }
@@ -51,8 +56,8 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> DateTill {
+        [DataMember()]
+        public Nullable<DateTime> DateTill {
             get {
                 return this.DateTillField;
             }
@@ -64,75 +69,75 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ElectronicDeviceRecord", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
-    [System.SerializableAttribute()]
-    public partial class ElectronicDeviceRecord : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    [DebuggerStepThrough()]
+    [GeneratedCode("System.Runtime.Serialization", "4.0.0.0")]
+    [DataContract(Name="ElectronicDeviceRecord", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
+    [Serializable()]
+    public partial class ElectronicDeviceRecord : object, IExtensibleDataObject, INotifyPropertyChanged {
         
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        [NonSerialized()]
+        private ExtensionDataObject extensionDataField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private string BsidField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> CertificateIssueDateField;
+        [OptionalField()]
+        private Nullable<DateTime> CertificateIssueDateField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private string CertificateNumberField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> CertificateValidDateField;
+        [OptionalField()]
+        private Nullable<DateTime> CertificateValidDateField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private string CiField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> DelDateField;
+        [OptionalField()]
+        private Nullable<DateTime> DelDateField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private int FactoryNumberField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid GuidField;
+        [OptionalField()]
+        private Guid GuidField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private int IsDeletedField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private string LacField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private string LocationLattitudeField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private string LocationLongitudeField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private string MacField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private RadioFrequencyCenter.DataBrowser.MeasurementsApiService.SignalFrequency[] SignalsFrequenciesField;
+        [OptionalField()]
+        private SignalFrequency[] SignalsFrequenciesField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private double SpRegionGaiField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> UpdateDateField;
+        [OptionalField()]
+        private Nullable<DateTime> UpdateDateField;
         
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+        [Browsable(false)]
+        public ExtensionDataObject ExtensionData {
             get {
                 return this.extensionDataField;
             }
@@ -141,21 +146,21 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public string Bsid {
             get {
                 return this.BsidField;
             }
             set {
-                if ((object.ReferenceEquals(this.BsidField, value) != true)) {
+                if ((ReferenceEquals(this.BsidField, value) != true)) {
                     this.BsidField = value;
                     this.RaisePropertyChanged("Bsid");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> CertificateIssueDate {
+        [DataMember()]
+        public Nullable<DateTime> CertificateIssueDate {
             get {
                 return this.CertificateIssueDateField;
             }
@@ -167,21 +172,21 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public string CertificateNumber {
             get {
                 return this.CertificateNumberField;
             }
             set {
-                if ((object.ReferenceEquals(this.CertificateNumberField, value) != true)) {
+                if ((ReferenceEquals(this.CertificateNumberField, value) != true)) {
                     this.CertificateNumberField = value;
                     this.RaisePropertyChanged("CertificateNumber");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> CertificateValidDate {
+        [DataMember()]
+        public Nullable<DateTime> CertificateValidDate {
             get {
                 return this.CertificateValidDateField;
             }
@@ -193,21 +198,21 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public string Ci {
             get {
                 return this.CiField;
             }
             set {
-                if ((object.ReferenceEquals(this.CiField, value) != true)) {
+                if ((ReferenceEquals(this.CiField, value) != true)) {
                     this.CiField = value;
                     this.RaisePropertyChanged("Ci");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> DelDate {
+        [DataMember()]
+        public Nullable<DateTime> DelDate {
             get {
                 return this.DelDateField;
             }
@@ -219,7 +224,7 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public int FactoryNumber {
             get {
                 return this.FactoryNumberField;
@@ -232,8 +237,8 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid Guid {
+        [DataMember()]
+        public Guid Guid {
             get {
                 return this.GuidField;
             }
@@ -245,7 +250,7 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public int IsDeleted {
             get {
                 return this.IsDeletedField;
@@ -258,72 +263,72 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public string Lac {
             get {
                 return this.LacField;
             }
             set {
-                if ((object.ReferenceEquals(this.LacField, value) != true)) {
+                if ((ReferenceEquals(this.LacField, value) != true)) {
                     this.LacField = value;
                     this.RaisePropertyChanged("Lac");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public string LocationLattitude {
             get {
                 return this.LocationLattitudeField;
             }
             set {
-                if ((object.ReferenceEquals(this.LocationLattitudeField, value) != true)) {
+                if ((ReferenceEquals(this.LocationLattitudeField, value) != true)) {
                     this.LocationLattitudeField = value;
                     this.RaisePropertyChanged("LocationLattitude");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public string LocationLongitude {
             get {
                 return this.LocationLongitudeField;
             }
             set {
-                if ((object.ReferenceEquals(this.LocationLongitudeField, value) != true)) {
+                if ((ReferenceEquals(this.LocationLongitudeField, value) != true)) {
                     this.LocationLongitudeField = value;
                     this.RaisePropertyChanged("LocationLongitude");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public string Mac {
             get {
                 return this.MacField;
             }
             set {
-                if ((object.ReferenceEquals(this.MacField, value) != true)) {
+                if ((ReferenceEquals(this.MacField, value) != true)) {
                     this.MacField = value;
                     this.RaisePropertyChanged("Mac");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public RadioFrequencyCenter.DataBrowser.MeasurementsApiService.SignalFrequency[] SignalsFrequencies {
+        [DataMember()]
+        public SignalFrequency[] SignalsFrequencies {
             get {
                 return this.SignalsFrequenciesField;
             }
             set {
-                if ((object.ReferenceEquals(this.SignalsFrequenciesField, value) != true)) {
+                if ((ReferenceEquals(this.SignalsFrequenciesField, value) != true)) {
                     this.SignalsFrequenciesField = value;
                     this.RaisePropertyChanged("SignalsFrequencies");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public double SpRegionGai {
             get {
                 return this.SpRegionGaiField;
@@ -336,8 +341,8 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> UpdateDate {
+        [DataMember()]
+        public Nullable<DateTime> UpdateDate {
             get {
                 return this.UpdateDateField;
             }
@@ -349,39 +354,39 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SignalFrequency", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
-    [System.SerializableAttribute()]
-    public partial class SignalFrequency : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    [DebuggerStepThrough()]
+    [GeneratedCode("System.Runtime.Serialization", "4.0.0.0")]
+    [DataContract(Name="SignalFrequency", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
+    [Serializable()]
+    public partial class SignalFrequency : object, IExtensibleDataObject, INotifyPropertyChanged {
         
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        [NonSerialized()]
+        private ExtensionDataObject extensionDataField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid GuidField;
+        [OptionalField()]
+        private Guid GuidField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid ResField;
+        [OptionalField()]
+        private Guid ResField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private double RnField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        [OptionalField()]
         private double TnField;
         
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+        [Browsable(false)]
+        public ExtensionDataObject ExtensionData {
             get {
                 return this.extensionDataField;
             }
@@ -390,8 +395,8 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid Guid {
+        [DataMember()]
+        public Guid Guid {
             get {
                 return this.GuidField;
             }
@@ -403,8 +408,8 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid Res {
+        [DataMember()]
+        public Guid Res {
             get {
                 return this.ResField;
             }
@@ -416,7 +421,7 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public double Rn {
             get {
                 return this.RnField;
@@ -429,7 +434,7 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [DataMember()]
         public double Tn {
             get {
                 return this.TnField;
@@ -442,40 +447,40 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             }
         }
         
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MeasurementsApiService.IMeasurementsApi")]
+    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
+    [ServiceContract(ConfigurationName="MeasurementsApiService.IMeasurementsApi")]
     public interface IMeasurementsApi {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMeasurementsApi/IsApiOnline", ReplyAction="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse")]
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/IsApiOnline", ReplyAction="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse")]
         int IsApiOnline();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMeasurementsApi/IsApiOnline", ReplyAction="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse")]
-        System.Threading.Tasks.Task<int> IsApiOnlineAsync();
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/IsApiOnline", ReplyAction="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse")]
+        Task<int> IsApiOnlineAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesData", ReplyAction="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesDataResponse")]
-        RadioFrequencyCenter.DataBrowser.MeasurementsApiService.ElectronicDeviceRecord[] GetElectronicDevicesData(RadioFrequencyCenter.DataBrowser.MeasurementsApiService.ElectronicDevicesSelectionCriteria selectionCriteria);
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesData", ReplyAction="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesDataResponse")]
+        ElectronicDeviceRecord[] GetElectronicDevicesData(ElectronicDevicesSelectionCriteria selectionCriteria);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesData", ReplyAction="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesDataResponse")]
-        System.Threading.Tasks.Task<RadioFrequencyCenter.DataBrowser.MeasurementsApiService.ElectronicDeviceRecord[]> GetElectronicDevicesDataAsync(RadioFrequencyCenter.DataBrowser.MeasurementsApiService.ElectronicDevicesSelectionCriteria selectionCriteria);
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesData", ReplyAction="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesDataResponse")]
+        Task<ElectronicDeviceRecord[]> GetElectronicDevicesDataAsync(ElectronicDevicesSelectionCriteria selectionCriteria);
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IMeasurementsApiChannel : RadioFrequencyCenter.DataBrowser.MeasurementsApiService.IMeasurementsApi, System.ServiceModel.IClientChannel {
+    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
+    public interface IMeasurementsApiChannel : IMeasurementsApi, IClientChannel {
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MeasurementsApiClient : System.ServiceModel.ClientBase<RadioFrequencyCenter.DataBrowser.MeasurementsApiService.IMeasurementsApi>, RadioFrequencyCenter.DataBrowser.MeasurementsApiService.IMeasurementsApi {
+    [DebuggerStepThrough()]
+    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
+    public partial class MeasurementsApiClient : ClientBase<IMeasurementsApi>, IMeasurementsApi {
         
         public MeasurementsApiClient() {
         }
@@ -488,11 +493,11 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public MeasurementsApiClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public MeasurementsApiClient(string endpointConfigurationName, EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public MeasurementsApiClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public MeasurementsApiClient(Binding binding, EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
@@ -500,15 +505,15 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             return base.Channel.IsApiOnline();
         }
         
-        public System.Threading.Tasks.Task<int> IsApiOnlineAsync() {
+        public Task<int> IsApiOnlineAsync() {
             return base.Channel.IsApiOnlineAsync();
         }
         
-        public RadioFrequencyCenter.DataBrowser.MeasurementsApiService.ElectronicDeviceRecord[] GetElectronicDevicesData(RadioFrequencyCenter.DataBrowser.MeasurementsApiService.ElectronicDevicesSelectionCriteria selectionCriteria) {
+        public ElectronicDeviceRecord[] GetElectronicDevicesData(ElectronicDevicesSelectionCriteria selectionCriteria) {
             return base.Channel.GetElectronicDevicesData(selectionCriteria);
         }
         
-        public System.Threading.Tasks.Task<RadioFrequencyCenter.DataBrowser.MeasurementsApiService.ElectronicDeviceRecord[]> GetElectronicDevicesDataAsync(RadioFrequencyCenter.DataBrowser.MeasurementsApiService.ElectronicDevicesSelectionCriteria selectionCriteria) {
+        public Task<ElectronicDeviceRecord[]> GetElectronicDevicesDataAsync(ElectronicDevicesSelectionCriteria selectionCriteria) {
             return base.Channel.GetElectronicDevicesDataAsync(selectionCriteria);
         }
     }
