@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-
 
 namespace RadioFrequencyCenter.DataSource
 {
@@ -20,10 +20,10 @@ namespace RadioFrequencyCenter.DataSource
         {
             List<ElectronicDeviceRecord> devisesRecords = null;
 
-            var isEmptyFromDate = false;
-            var isEmptyTillDate = false;
+            var isEmptyFromDate = true;
+            var isEmptyTillDate = true;
 
-            var isEmptyCriteria = false;
+            var isEmptyCriteria = true;
             var isFullCriteria = false;
 
             var isEmptyCriteriaObject = selectionCriteria == null;
@@ -95,12 +95,14 @@ WHERE
 ";
             }
 
-            var connectionsStrings = System.Configuration.ConfigurationManager.ConnectionStrings;
+            var connectionsStrings = ConfigurationManager.ConnectionStrings;
             var dbConnectionString = string.Empty;
-            if (connectionsStrings != null)
+
+            const string actualBdSettingName = "FORGE-JITA";
+            var connectionStringSettings = connectionsStrings?[actualBdSettingName ];
+            if (connectionStringSettings != null)
             {
-                // const int firstElement = 0;
-                dbConnectionString = connectionsStrings[1].ConnectionString;
+                dbConnectionString = connectionStringSettings.ConnectionString;
             }
 
             var dbConnection = new SqlConnection();

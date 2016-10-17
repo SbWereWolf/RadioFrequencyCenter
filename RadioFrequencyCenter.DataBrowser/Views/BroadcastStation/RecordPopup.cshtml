@@ -1,0 +1,178 @@
+﻿
+@model RadioFrequencyCenter.DataBrowser.Models.BroadcastStation
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h1 id="myModalLabel" >Station and Broadcast Frequencies</h1>
+    </div>
+    <div class="modal-body" >
+
+@{
+    var isEmptyReocordSet = Model == null;
+    if (isEmptyReocordSet)
+    {
+        @Html.Label("no data")
+    }
+    else
+    {
+        var record = Model;
+        <div>
+            <table class="table table-condensed table-hover table-bordered">
+                <tbody>
+
+                    <tr>
+                        <td class="DateSvid">
+                            DateSvid
+                        </td>
+                        <td class="DateSvid">
+                            <mark>@record.DateSvid</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="DelDate">
+                            DelDate
+                        </td>
+                        <td class="DelDate">
+                            <mark>@record.DelDate</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="IdRes">
+                            IdRes
+                        </td>
+                        <td class="IdRes">
+                            <mark>@record.IdRes</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="Ids">
+                            Ids
+                        </td>
+                        <td class="Ids">
+                            <mark>@record.Ids</mark>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="Lat">
+                            Lat
+                        </td>
+                        <td class="Lat">
+                            <mark>@record.Lat</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="Long">
+                            Long
+                        </td>
+                        <td class="Long">
+                            <mark>@record.Long</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="Mac">
+                            Mac
+                        </td>
+                        <td class="Mac">
+                            <mark>@record.Mac</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="NumSvid">
+                            NumSvid
+                        </td>
+                        <td class="NumSvid">
+                            <mark>@record.NumSvid</mark>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="Region">
+                            Region
+                        </td>
+                        <td class="Region">
+                            <mark>@record.Region</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="SrokSvid">
+                            SrokSvid
+                        </td>
+                        <td class="SrokSvid">
+                            <mark>@record.SrokSvid</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="UpdateDate">
+                            UpdateDate
+                        </td>
+                        <td class="UpdateDate">
+                            <mark>@record.UpdateDate</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ZavNum">
+                            ZavNum
+                        </td>
+                        <td class="ZavNum">
+                            <mark>@record.ZavNum</mark>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @if (record.Frequencies != null)
+            {
+                <table class="table table-condensed table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="Res">
+                                Res
+                            </th>
+                            <th class="IdF">
+                                IdF
+                            </th>
+                            <th class="Rn">
+                                Rn
+                            </th>
+                            <th class="Tn">
+                                Tn
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var frequency in record.Frequencies)
+                    {
+                        if (frequency != null)
+                        {
+                                <tr>
+                                    <td class="Res">
+                                        @frequency.Res
+                                    </td>
+                                    <td class="IdF">
+                                        @frequency.IdF
+                                    </td>
+                                    <td class="Rn">
+                                        @frequency.Rn
+                                    </td>
+                                    <td class="Tn">
+                                        @frequency.Tn
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    }
+}
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>
+
+
