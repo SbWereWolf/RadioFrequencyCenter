@@ -16,9 +16,9 @@ namespace RadioFrequencyCenter.DataSource
             return 1;
         }
 
-        public ElectronicDeviceRecord[] GetElectronicDevicesData(ElectronicDevicesSelectionCriteria selectionCriteria)
+        public RadioDevice[] GetRadioDevicesData(SelectionCriteria selectionCriteria)
         {
-            List<ElectronicDeviceRecord> devisesRecords = null;
+            List<RadioDevice> devisesRecords = null;
 
             var isEmptyFromDate = true;
             var isEmptyTillDate = true;
@@ -43,28 +43,24 @@ namespace RadioFrequencyCenter.DataSource
                 isFullCriteria = !isEmptyTillDate && !isEmptyFromDate;
             }
 
-            var updateDateCriteriaText = string.Empty;
+            var updatedateCriteria = string.Empty;
             if (!isEmptyCriteria)
             {
-                // ReSharper disable ConditionIsAlwaysTrueOrFalse
                 if ( !isEmptyFromDate )
-                    // ReSharper restore ConditionIsAlwaysTrueOrFalse
                 {
-                    updateDateCriteriaText = $"> {dateFrom}";
+                    updatedateCriteria = $"> {dateFrom}";
                 }
-                // ReSharper disable ConditionIsAlwaysTrueOrFalse
                 if (!isEmptyTillDate)
-                    // ReSharper restore ConditionIsAlwaysTrueOrFalse
                 {
-                    updateDateCriteriaText = $"< {dateTill}";
+                    updatedateCriteria = $"< {dateTill}";
                 }
                 if (isFullCriteria)
                 {
-                    updateDateCriteriaText = $"BETWEEN {dateFrom} AND {dateTill}";
+                    updatedateCriteria = $"BETWEEN {dateFrom} AND {dateTill}";
                 }
             }
 
-            var devisesQueryText = @"
+            var devisesQuery = @"
 SELECT 
       [GUID] AS Guid
     , [factoryNumber] AS FactoryNumber
@@ -85,20 +81,20 @@ FROM
     [RESDB].[dbo].[RES]
 ;
 ";
-            if (!string.IsNullOrEmpty(updateDateCriteriaText))
+            if (!string.IsNullOrEmpty(updatedateCriteria))
             {
-                devisesQueryText = $@"
-{devisesQueryText}
+                devisesQuery = $@"
+{devisesQuery}
 WHERE
-    [updateDate] {updateDateCriteriaText}
+    [updateDate] {updatedateCriteria}
 ;
 ";
             }
 
             var connectionsStrings = ConfigurationManager.ConnectionStrings;
             var dbConnectionString = string.Empty;
-            const string dataSource = "FORGE-JITA";
-            var connectionStringSetting = connectionsStrings?[dataSource];
+            const string connectionName = "FORGE-JITA";
+            var connectionStringSetting = connectionsStrings?[connectionName];
             if (connectionStringSetting != null)
             {
                 dbConnectionString = connectionStringSetting.ConnectionString;
@@ -124,7 +120,7 @@ WHERE
             if ( dbConnection?.State == ConnectionState.Open )
             {
                 getDataCommand = dbConnection.CreateCommand();
-                getDataCommand.CommandText = devisesQueryText;
+                getDataCommand.CommandText = devisesQuery;
             }
 
             SqlDataReader devisesQueryResults = null;
@@ -142,11 +138,11 @@ WHERE
             
             if (devisesQueryResults != null )
             {
-                devisesRecords = MapDataToList<ElectronicDeviceRecord>(devisesQueryResults);
+                devisesRecords = MapDataToList<RadioDevice>(devisesQueryResults);
                 devisesQueryResults.Close();
             }
 
-            ElectronicDeviceRecord[] devices = null;
+            RadioDevice[] devices = null;
             if (devisesRecords != null)
             {
                 devices = devisesRecords.ToArray();
@@ -206,9 +202,9 @@ WHERE
 
             }
 
-            if (dbConnection?.State == ConnectionState.Open)
+            if (dbConnection?.State != ConnectionState.Closed)
             {
-                dbConnection.Close();
+                dbConnection?.Close();
             }
 
             return devices;
@@ -226,7 +222,6 @@ WHERE
             var properties = businessEntityType.GetProperties();
             foreach (var info in properties.Where(info => info != null))
             {
-                //hashtable[info.Name.ToUpper()] = info;
                 hashtable[info.Name] = info;
             }
 
@@ -240,7 +235,6 @@ WHERE
                     var fieldValue = dr.GetValue(index);
                     if (fieldName == null || fieldValue == null ) continue;
                     var info = (PropertyInfo)
-                        //hashtable[dr.GetName(index).ToUpper()];
                         hashtable[fieldName];
                     if (info == null) continue;
                     if (!info.CanWrite) continue;
