@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using Microsoft.Ajax.Utilities;
 using RadioFrequencyCenter.DataBrowser.MeasurementsApiService;
 using RadioFrequencyCenter.DataBrowser.Proxy;
+using BroadcastFrequencies = RadioFrequencyCenter.DataBrowser.DataAccessLayer.BroadcastFrequencies;
 
 namespace RadioFrequencyCenter.DataBrowser.Models
 {
@@ -33,7 +35,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
 
         public DateTimeOffset? UpdateDate { get; private set; }
 
-        public BroadcastFrequency[] Frequencies { get; set; }
+        public BroadcastFrequency[] Frequencies { get; private set; }
 
         public static List<BroadcastStation> GetAllRecords()
         {
@@ -45,9 +47,10 @@ namespace RadioFrequencyCenter.DataBrowser.Models
             {
                 foreach (var repositoryRecord in repositoryData)
                 {
+                    BroadcastStation record  = null;
                     if (repositoryRecord != null)
                     {
-                        var record = new BroadcastStation
+                        record = new BroadcastStation
                         {
                             DateSvid = repositoryRecord.DATE_SVID,
                             DelDate = repositoryRecord.DATE_SVID,
@@ -60,10 +63,16 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                             Region = repositoryRecord.REGION,
                             SrokSvid = repositoryRecord.SROK_SVID,
                             UpdateDate = repositoryRecord.UPDATE_DATE,
-                            ZavNum = repositoryRecord.ZAV_NUM
+                            ZavNum = repositoryRecord.ZAV_NUM,
+                            Frequencies = new BroadcastFrequency[] {}
                         };
+                    }
+
+                    if (record!= null)
+                    {
                         allRecords.Add(record);
                     }
+                    
                 }
             }
             return allRecords;
@@ -161,8 +170,32 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                             REGION = rawRecord.SpRegionGai,
                             SROK_SVID= rawRecord.CertificateValidDate,
                             UPDATE_DATE = rawRecord.UpdateDate,
-                            ZAV_NUM = rawRecord.FactoryNumber.ToStringInvariant()
+                            ZAV_NUM = rawRecord.FactoryNumber.ToStringInvariant(),
+                            BroadcastFrequencies = new EntitySet<BroadcastFrequencies>()
                         };
+
+                        var signalsFrequencies = rawRecord.SignalsFrequencies;
+                        if (signalsFrequencies?.Length > 0 )
+                        {
+                            var broadcastFrequencies = new EntitySet<BroadcastFrequencies>();
+
+                            foreach (var frequrency in signalsFrequencies)
+                            {
+                                if (frequrency != null)
+                                {
+                                    var broadcastFrequency = new BroadcastFrequencies
+                                    {
+                                        RN = frequrency.Rn,
+                                        TN = frequrency.Tn
+                                    };
+                                    broadcastFrequencies.Add(broadcastFrequency);
+                                }
+                            }
+                            if (broadcastFrequencies.Count > 0 )
+                            {
+                                instance.BroadcastFrequencies = broadcastFrequencies;
+                            }
+                        }
 
                         var isSuccess = proxy.Repository.InsertStation(instance);
                         if (isSuccess)
