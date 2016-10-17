@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-
 
 namespace RadioFrequencyCenter.DataSource
 {
@@ -20,10 +20,10 @@ namespace RadioFrequencyCenter.DataSource
         {
             List<ElectronicDeviceRecord> devisesRecords = null;
 
-            var isEmptyFromDate = false;
-            var isEmptyTillDate = false;
+            var isEmptyFromDate = true;
+            var isEmptyTillDate = true;
 
-            var isEmptyCriteria = false;
+            var isEmptyCriteria = true;
             var isFullCriteria = false;
 
             var isEmptyCriteriaObject = selectionCriteria == null;
@@ -39,8 +39,8 @@ namespace RadioFrequencyCenter.DataSource
                 isEmptyFromDate = dateFrom == null;
                 isEmptyTillDate = dateTill == null;
 
-                isEmptyCriteria = isEmptyTillDate || isEmptyFromDate ;
-                isFullCriteria = !(isEmptyTillDate && isEmptyFromDate);
+                isEmptyCriteria = isEmptyTillDate && isEmptyFromDate ;
+                isFullCriteria = !isEmptyTillDate && !isEmptyFromDate;
             }
 
             var updateDateCriteriaText = string.Empty;
@@ -95,15 +95,16 @@ WHERE
 ";
             }
 
-            var connectionsStrings = System.Configuration.ConfigurationManager.ConnectionStrings;
+            var connectionsStrings = ConfigurationManager.ConnectionStrings;
             var dbConnectionString = string.Empty;
-            if (connectionsStrings != null)
+            const string dataSource = "FORGE-JITA";
+            var connectionStringSetting = connectionsStrings?[dataSource];
+            if (connectionStringSetting != null)
             {
-                // const int firstElement = 0;
-                dbConnectionString = connectionsStrings[1].ConnectionString;
+                dbConnectionString = connectionStringSetting.ConnectionString;
             }
 
-            var dbConnection = new SqlConnection();
+            SqlConnection dbConnection = null;
             if (!string.IsNullOrEmpty(dbConnectionString))
             {
                 dbConnection = new SqlConnection(dbConnectionString);
@@ -111,7 +112,7 @@ WHERE
 
             try
             {
-                dbConnection.Open();
+                dbConnection?.Open();
             }
             catch (Exception)
             {
@@ -120,7 +121,7 @@ WHERE
             }
 
             SqlCommand getDataCommand = null;
-            if ( dbConnection.State == ConnectionState.Open )
+            if ( dbConnection?.State == ConnectionState.Open )
             {
                 getDataCommand = dbConnection.CreateCommand();
                 getDataCommand.CommandText = devisesQueryText;
@@ -205,7 +206,7 @@ WHERE
 
             }
 
-            if (dbConnection.State == ConnectionState.Open)
+            if (dbConnection?.State == ConnectionState.Open)
             {
                 dbConnection.Close();
             }

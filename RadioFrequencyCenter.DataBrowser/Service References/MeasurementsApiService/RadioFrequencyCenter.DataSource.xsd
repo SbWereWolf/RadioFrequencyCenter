@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ElectronicDevicesSelectionCriteria">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateFrom" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DateTill" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ElectronicDevicesSelectionCriteria" nillable="true" type="tns:ElectronicDevicesSelectionCriteria" />
+  <xs:complexType name="ArrayOfElectronicDeviceRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ElectronicDeviceRecord" nillable="true" type="tns:ElectronicDeviceRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfElectronicDeviceRecord" nillable="true" type="tns:ArrayOfElectronicDeviceRecord" />
+  <xs:complexType name="ElectronicDeviceRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Bsid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CertificateIssueDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CertificateNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CertificateValidDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Ci" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DelDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FactoryNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="Guid" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsDeleted" type="xs:int" />
+      <xs:element minOccurs="0" name="Lac" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationLattitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocationLongitude" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Mac" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignalsFrequencies" nillable="true" type="tns:ArrayOfSignalFrequency" />
+      <xs:element minOccurs="0" name="SpRegionGai" type="xs:double" />
+      <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ElectronicDeviceRecord" nillable="true" type="tns:ElectronicDeviceRecord" />
+  <xs:complexType name="ArrayOfSignalFrequency">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SignalFrequency" nillable="true" type="tns:SignalFrequency" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSignalFrequency" nillable="true" type="tns:ArrayOfSignalFrequency" />
+  <xs:complexType name="SignalFrequency">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Guid" type="ser:guid" />
+      <xs:element minOccurs="0" name="Res" type="ser:guid" />
+      <xs:element minOccurs="0" name="Rn" type="xs:double" />
+      <xs:element minOccurs="0" name="Tn" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SignalFrequency" nillable="true" type="tns:SignalFrequency" />
+</xs:schema>
