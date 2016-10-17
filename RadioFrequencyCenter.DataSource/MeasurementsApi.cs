@@ -39,8 +39,8 @@ namespace RadioFrequencyCenter.DataSource
                 isEmptyFromDate = dateFrom == null;
                 isEmptyTillDate = dateTill == null;
 
-                isEmptyCriteria = isEmptyTillDate || isEmptyFromDate ;
-                isFullCriteria = !(isEmptyTillDate && isEmptyFromDate);
+                isEmptyCriteria = isEmptyTillDate && isEmptyFromDate ;
+                isFullCriteria = !isEmptyTillDate && !isEmptyFromDate;
             }
 
             var updateDateCriteriaText = string.Empty;
@@ -97,15 +97,14 @@ WHERE
 
             var connectionsStrings = ConfigurationManager.ConnectionStrings;
             var dbConnectionString = string.Empty;
-
-            const string actualBdSettingName = "FORGE-JITA";
-            var connectionStringSettings = connectionsStrings?[actualBdSettingName ];
-            if (connectionStringSettings != null)
+            const string dataSource = "FORGE-JITA";
+            var connectionStringSetting = connectionsStrings?[dataSource];
+            if (connectionStringSetting != null)
             {
-                dbConnectionString = connectionStringSettings.ConnectionString;
+                dbConnectionString = connectionStringSetting.ConnectionString;
             }
 
-            var dbConnection = new SqlConnection();
+            SqlConnection dbConnection = null;
             if (!string.IsNullOrEmpty(dbConnectionString))
             {
                 dbConnection = new SqlConnection(dbConnectionString);
@@ -113,7 +112,7 @@ WHERE
 
             try
             {
-                dbConnection.Open();
+                dbConnection?.Open();
             }
             catch (Exception)
             {
@@ -122,7 +121,7 @@ WHERE
             }
 
             SqlCommand getDataCommand = null;
-            if ( dbConnection.State == ConnectionState.Open )
+            if ( dbConnection?.State == ConnectionState.Open )
             {
                 getDataCommand = dbConnection.CreateCommand();
                 getDataCommand.CommandText = devisesQueryText;
@@ -207,7 +206,7 @@ WHERE
 
             }
 
-            if (dbConnection.State == ConnectionState.Open)
+            if (dbConnection?.State == ConnectionState.Open)
             {
                 dbConnection.Close();
             }
