@@ -11,12 +11,12 @@ namespace RadioFrequencyCenter.DataSource
         int IsApiOnline();
 
         [OperationContract]
-        ElectronicDeviceRecord[] GetElectronicDevicesData(ElectronicDevicesSelectionCriteria selectionCriteria);
+        RadioDevice[] GetRadioDevicesData(SelectionCriteria selectionCriteria);
         
     }
     
     [DataContract]
-    public class ElectronicDevicesSelectionCriteria
+    public class SelectionCriteria
     {
         [DataMember]
         public DateTime? DateFrom { get; set; }
@@ -26,7 +26,7 @@ namespace RadioFrequencyCenter.DataSource
     }
 
     [DataContract]
-    public class ElectronicDeviceRecord
+    public class RadioDevice
     {
         [DataMember]
         public Guid Guid { get; set; }
