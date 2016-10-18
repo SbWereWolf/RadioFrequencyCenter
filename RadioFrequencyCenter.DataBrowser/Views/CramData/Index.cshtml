@@ -10,25 +10,24 @@
 
 <h1>Cram Data</h1>
 <div class="btn-group btn-group-lg">
-    @Html.ActionLink("на главную", "Index", "Home", null, new { @class = "btn btn-primary" })
-    @Html.ActionLink("Загрузить данные полностью", "CramWholeData", "CramData", null, new { @class = "btn btn-primary " })
-    @Html.ActionLink("Загрузить только новые", "CramNewerOnly", "CramData", null, new { @class = "btn btn-primary " })
-    @Html.ActionLink("Удалить все записи", "DeleteAllRecords", "CramData", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("на главную", "Index", "Home", null, new {@class = "btn btn-primary"})
+    @Html.ActionLink("Загрузить данные полностью", "CramWholeData", "CramData", null, new {@class = "btn btn-primary "})
+    @Html.ActionLink("Загрузить только новые", "CramNewerOnly", "CramData", null, new {@class = "btn btn-primary "})
+    @Html.ActionLink("Удалить все записи", "DeleteAllRecords", "CramData", null, new {@class = "btn btn-primary"})
+    @using (Html.BeginForm("CramDevicesByParameters", "CramData", FormMethod.Post, new {@class = "form-actions", id = "StationDevicesByParameters"}))
+    {
+        <div class="form-group">
+            @Html.Label("Номер свидетельства", new {@class = "control-label"})
+            @Html.TextBoxFor(x => x.Station.NumSvid, new {@class = "input-medium", type = "text", placeholder = "Номер свидетельства"})
+        </div>
+        <div class="form-group">
+            @Html.Label("Заводской номер", new {@class = "control-label"})
+            @Html.TextBoxFor(x => x.Station.ZavNum, new {@class = "input-medium", type = "text", placeholder = "Заводской номер"})
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Загрузить по параметрам" class="btn btn-primary"/>
+        </div>
+    }
+
 </div>
-@using (Html.BeginForm("CramDevicesByParameters", "CramData", FormMethod.Post, new { @class = "form-actions", id = "CriteriaParameters" }))
-{
-    <div class="form-group">
-        @Html.Label("Номер свидетельства", new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.SelectionCriteria.Station.CertificateNumber, new { @class = "input-medium", type = "text", placeholder = "Номер свидетельства" })
-    </div>
-        <div class="form-group">
-            @Html.Label("Заводской номер", new { @class = "control-label" })
-            @Html.TextBoxFor(x => x.SelectionCriteria.Station.FactoryNumber, new { @class = "input-medium", type = "text", placeholder = "Заводской номер" })
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Загрузить по параметрам" class="btn btn-primary" />
-        </div>
-}
-
-
 

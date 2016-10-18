@@ -2,7 +2,6 @@
 using Microsoft.Ajax.Utilities;
 using RadioFrequencyCenter.DataBrowser.MeasurementsApiService;
 using RadioFrequencyCenter.DataBrowser.Proxy;
-using RadioFrequencyCenter.DataSource;
 
 namespace RadioFrequencyCenter.DataBrowser.Models
 {
@@ -10,16 +9,16 @@ namespace RadioFrequencyCenter.DataBrowser.Models
     {
         public CramData()
         {
-            SelectionCriteria = new SelectionCriteria();
+            Station = new RadioDevice();
         }
 
-        public SelectionCriteria SelectionCriteria { get; set;  }
+        public RadioDevice Station { get; }
 
-        public bool GetIt()
+        public static bool DownloadAllRecords()
         {
             var result = false;
             var apiClient = new MeasurementsApiClient();
-            var rawRecords = apiClient.GetRadioStationsAndSignals(SelectionCriteria);
+            var rawRecords = apiClient.GetRadioDevicesData(null);
 
             var radioDevices = new List<RadioDevice>();
             if (rawRecords != null)
@@ -40,7 +39,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                             Region= rawRecord.SpRegionGai,
                             SrokSvid= rawRecord.CertificateValidDate,
                             UpdateDate= rawRecord.UpdateDate,
-                            ZavNum= rawRecord.FactoryNumber?.ToStringInvariant(),
+                            ZavNum= rawRecord.FactoryNumber.ToStringInvariant(),
                             RadioSignals= new RadioDevice.SignalFrequency[] {}
                         };
 
@@ -69,7 +68,10 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                         }
 
                         radioDevices.Add(instance);
+
+
                     }
+
                 }
             }
 

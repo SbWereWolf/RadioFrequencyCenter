@@ -228,7 +228,6 @@
       <LastGenOutput>RadioFrequencyCenter.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Properties\DataSources\RadioFrequencyCenter.DataSource.RadioStation.datasource" />
     <None Include="Service References\MeasurementsApiService\configuration91.svcinfo" />
     <None Include="Service References\MeasurementsApiService\configuration.svcinfo" />
     <Content Include="Scripts\bootstrap.js" />
@@ -250,6 +249,9 @@
     <Content Include="Scripts\knockout-2.0.0.js" />
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Service References\MeasurementsApiService\RadioFrequencyCenter.DataBrowser.MeasurementsApiService.RadioDevice.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\MeasurementsApiService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -280,9 +282,6 @@
     <Content Include="Views\RadioDevice\RecordPage.cshtml" />
     <Content Include="Views\RadioDevice\RecordPopup.cshtml" />
     <Content Include="Views\CramData\Index.cshtml" />
-    <None Include="Service References\MeasurementsApiService\System.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -306,12 +305,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\MeasurementsApiService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RadioFrequencyCenter.DataSource\RadioFrequencyCenter.DataSource.csproj">
-      <Project>{903c882d-65ea-470e-8f84-a64355c8eb89}</Project>
-      <Name>RadioFrequencyCenter.DataSource</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
