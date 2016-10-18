@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using RadioFrequencyCenter.DataBrowser.Proxy;
 
 namespace RadioFrequencyCenter.DataBrowser.Models
@@ -67,10 +68,10 @@ namespace RadioFrequencyCenter.DataBrowser.Models
             //}
         }
 
-        public static List<RadioDevice> GetAllRecords()
+        public static List<RadioDevice> GetRecords()
         {
             var repository = new RadioDevices();
-            var allRecords = repository.GetAllRecords();
+            var allRecords = repository.SelectRecords();
             return allRecords;
         }
 
@@ -113,6 +114,24 @@ namespace RadioFrequencyCenter.DataBrowser.Models
             bool result = proxy.DeleteAll();
 
             return result;
+        }
+
+        public static List<RadioDevice> SearchRadioDevice(NameValueCollection requestForm)
+        {
+            Proxy.RadioDevices radioDevices = null;
+            if (requestForm != null)
+            {
+                //var requestForm = Request.Form;
+                radioDevices = new Proxy.RadioDevices();
+                radioDevices.Criteria?.DefineCriteria(requestForm);
+            }
+
+            List<RadioDevice> allRecords = null;
+            if (radioDevices != null)
+            {
+                allRecords = radioDevices.SelectRecords();
+            }
+            return allRecords;
         }
     }
 }

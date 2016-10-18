@@ -5,23 +5,24 @@ namespace RadioFrequencyCenter.DataBrowser.Controllers
 {
     public class RadioDeviceController : Controller
     {
-        public ActionResult AllRecords()
+        public ActionResult BrowseData()
         {
-            var allRecords = RadioDevice.GetAllRecords();
+            var requestForm = Request?.Form;
+            var allRecords = RadioDevice.SearchRadioDevice(requestForm);
             return View(allRecords);
         }
-
+        
         public ActionResult DeleteAllRecords()
         {
             // ReSharper disable UnusedVariable
             var result = RadioDevice.DeleteAllRecords();
             // ReSharper restore UnusedVariable
-            return RedirectToAction("AllRecords", "RadioDevice");
+            return RedirectToAction("BrowseData", "RadioDevice");
         }
 
         public ActionResult Index()
         {
-            return RedirectToAction("AllRecords", "RadioDevice");
+            return RedirectToAction("BrowseData", "RadioDevice");
         }
         public ActionResult RecordPage(string id)
         {

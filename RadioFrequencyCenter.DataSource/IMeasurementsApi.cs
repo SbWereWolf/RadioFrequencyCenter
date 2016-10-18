@@ -11,28 +11,30 @@ namespace RadioFrequencyCenter.DataSource
         int IsApiOnline();
 
         [OperationContract]
-        RadioDevice[] GetRadioDevicesData(SelectionCriteria selectionCriteria);
+        RadioStation[] GetRadioStationsAndSignals(SelectionCriteria selectionCriteria);
         
     }
-    
+
     [DataContract]
     public class SelectionCriteria
     {
         [DataMember]
-        public DateTime? DateFrom { get; set; }
+        public RadioStation Station;
 
-        [DataMember]
-        public DateTime? DateTill { get; set; } 
+        public SelectionCriteria()
+        {
+            Station = new RadioStation();
+        }
     }
 
     [DataContract]
-    public class RadioDevice
+    public class RadioStation
     {
         [DataMember]
         public Guid Guid { get; set; }
 
         [DataMember]
-        public int FactoryNumber { get; set; }
+        public int? FactoryNumber { get; set; }
 
         [DataMember]
         public string CertificateNumber { get; set; }
@@ -44,7 +46,7 @@ namespace RadioFrequencyCenter.DataSource
         public DateTime? CertificateValidDate { get; set; }
 
         [DataMember]
-        public double SpRegionGai { get; set; }
+        public double? SpRegionGai { get; set; }
 
         [DataMember]
         public string LocationLattitude { get; set; }
@@ -65,7 +67,7 @@ namespace RadioFrequencyCenter.DataSource
         public string Mac { get; set; }
 
         [DataMember]
-        public int IsDeleted { get; set; }
+        public int? IsDeleted { get; set; }
 
         [DataMember]
         public DateTime? DelDate { get; set; }
@@ -83,12 +85,12 @@ namespace RadioFrequencyCenter.DataSource
         public Guid Guid { get; set; }
 
         [DataMember]
-        public Guid Res { get; set; }
+        public Guid? Res { get; set; }
 
         [DataMember]
-        public double Tn { get; set; }
+        public double? Tn { get; set; }
 
         [DataMember]
-        public double Rn { get; set; }
+        public double? Rn { get; set; }
     }
 }

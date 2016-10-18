@@ -13,30 +13,55 @@ namespace RadioFrequencyCenter.DataBrowser.Controllers
 
         public ActionResult CramWholeData()
         {
+            var crammer = new CramData();
             // ReSharper disable UnusedVariable
-            var result = Models.CramData.DownloadAllRecords();
+            var result = crammer.GetIt();
             // ReSharper restore UnusedVariable
             return RedirectToAction("Index", "CramData");
             
         }
         public ActionResult CramNewerOnly()
         {
-            // ReSharper disable UnusedVariable
-            //var result = Models.CramData.DownloadAllRecords();
-            // ReSharper restore UnusedVariable
-            return RedirectToAction("Index", "CramData");
+            var proxy = new Proxy.RadioDevices();
+            var dateupdate = proxy.GetLastUpdateDate();
+            
+            var crammer = new CramData();
+            var stationCriteria = crammer.SelectionCriteria?.Station;
+            if (stationCriteria != null && dateupdate.HasValue )
+            {
+                stationCriteria.UpdateDate = dateupdate.Value.LocalDateTime ;
+            }
 
+            // ReSharper disable UnusedVariable
+            var result = crammer.GetIt();
+            // ReSharper restore UnusedVariable
+
+            var cramNewerOnly = RedirectToAction("Index", "CramData");
+            return cramNewerOnly;
         }
+
         public ActionResult CramDevicesByParameters()
         {
-            // ReSharper disable UnusedVariable
-            //var result = Models.CramData.DownloadAllRecords();
-            // ReSharper restore UnusedVariable
-
             if (Request?.Form != null)
             {
-                var numSvid = Request.Form["Station.NumSvid"];
-                var zavNum = Request.Form["Station.ZavNum"];
+                var certificatenumber = Request.Form["SelectionCriteria.Station.CertificateNumber"];
+                var factorynumber = Request.Form["SelectionCriteria.Station.FactoryNumber"];
+                var crammer = new CramData();
+                var selectionCriteria = crammer.SelectionCriteria?.Station;
+                if (selectionCriteria != null)
+                {
+                    selectionCriteria.CertificateNumber = certificatenumber;
+                    selectionCriteria.FactoryNumber = null;
+                    int factoryNumberInt;
+                    var isConverted = int.TryParse(factorynumber, out factoryNumberInt);
+                    if (isConverted)
+                    {
+                        selectionCriteria.FactoryNumber = factoryNumberInt;
+                    }
+                }
+                // ReSharper disable UnusedVariable
+                var result = crammer.GetIt();
+                // ReSharper restore UnusedVariable
             }
 
             var cramDevicesByParameters = RedirectToAction("Index", "CramData");

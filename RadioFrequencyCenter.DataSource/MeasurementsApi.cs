@@ -16,51 +16,57 @@ namespace RadioFrequencyCenter.DataSource
             return 1;
         }
 
-        public RadioDevice[] GetRadioDevicesData(SelectionCriteria selectionCriteria)
+        public RadioStation[] GetRadioStationsAndSignals(SelectionCriteria selectionCriteria)
         {
-            List<RadioDevice> devisesRecords = null;
+            List<RadioStation> devicesRecords = null;
 
-            var isEmptyFromDate = true;
-            var isEmptyTillDate = true;
+            var isEmptyUpdatedate = true;
+            var isEmptyNumsvid = true;
+            var isEmptyZavnum = true;
 
             var isEmptyCriteria = true;
-            var isFullCriteria = false;
 
-            var isEmptyCriteriaObject = selectionCriteria == null;
+            var stationCriteria = selectionCriteria?.Station;
+            var isEmptyCriteriaObject = stationCriteria == null;
 
-            DateTime? dateFrom = null;
-            DateTime? dateTill = null;
+            DateTime? updatedate = null;
+            var numsvid = string.Empty;
+            int? zavnum = null;
 
             if (!isEmptyCriteriaObject)
             {
-                dateFrom = selectionCriteria.DateFrom;
-                dateTill = selectionCriteria.DateTill;
+                updatedate = stationCriteria.UpdateDate;
+                numsvid = stationCriteria.CertificateNumber;
+                zavnum = stationCriteria.FactoryNumber;
 
-                isEmptyFromDate = dateFrom == null;
-                isEmptyTillDate = dateTill == null;
+                isEmptyUpdatedate = updatedate == null;
+                isEmptyNumsvid = numsvid == null;
+                isEmptyZavnum = zavnum == null;
 
-                isEmptyCriteria = isEmptyTillDate && isEmptyFromDate ;
-                isFullCriteria = !isEmptyTillDate && !isEmptyFromDate;
+                isEmptyCriteria = isEmptyUpdatedate && isEmptyNumsvid && isEmptyZavnum;
             }
 
             var updatedateCriteria = string.Empty;
+            var numsvidCriteria = string.Empty;
+            var zavnumCriteria = string.Empty;
             if (!isEmptyCriteria)
             {
-                if ( !isEmptyFromDate )
+                if (!isEmptyUpdatedate)
                 {
-                    updatedateCriteria = $"> {dateFrom}";
+                    updatedateCriteria = $" updateDate > CONVERT ( datetimeoffset , '{updatedate}'   , 0  )";
                 }
-                if (!isEmptyTillDate)
+                if (!isEmptyNumsvid)
                 {
-                    updatedateCriteria = $"< {dateTill}";
+                    numsvidCriteria = $" certificateNumber LIKE '{numsvid}'";
                 }
-                if (isFullCriteria)
+                if (!isEmptyZavnum)
                 {
-                    updatedateCriteria = $"BETWEEN {dateFrom} AND {dateTill}";
+                    zavnumCriteria = $" factoryNumber = {zavnum}";
                 }
             }
+            var queryCriteria = new []{updatedateCriteria, numsvidCriteria, zavnumCriteria };
 
-            var devisesQuery = @"
+            var devicesQuery = @"
 SELECT 
       [GUID] AS Guid
     , [factoryNumber] AS FactoryNumber
@@ -79,16 +85,33 @@ SELECT
     , [updateDate] AS UpdateDate
 FROM
     [RESDB].[dbo].[RES]
-;
 ";
-            if (!string.IsNullOrEmpty(updatedateCriteria))
+            if (isEmptyCriteria)
             {
-                devisesQuery = $@"
-{devisesQuery}
-WHERE
-    [updateDate] {updatedateCriteria}
+                devicesQuery = $@"
+{devicesQuery}
 ;
 ";
+            }
+            else
+            {
+                devicesQuery = $@"
+{devicesQuery}
+WHERE
+";
+                var letAddAndKeyword = false;
+                foreach (var criteria in queryCriteria)
+                {
+                    if (!string.IsNullOrWhiteSpace(criteria))
+                    {
+                        devicesQuery = letAddAndKeyword 
+                            ? $@"{devicesQuery} AND {criteria}" 
+                            : $@"{devicesQuery} {criteria}";
+                        letAddAndKeyword = true;
+                    }
+                }
+                devicesQuery = $@"{devicesQuery};";
+
             }
 
             var connectionsStrings = ConfigurationManager.ConnectionStrings;
@@ -120,44 +143,44 @@ WHERE
             if ( dbConnection?.State == ConnectionState.Open )
             {
                 getDataCommand = dbConnection.CreateCommand();
-                getDataCommand.CommandText = devisesQuery;
+                getDataCommand.CommandText = devicesQuery;
             }
 
-            SqlDataReader devisesQueryResults = null;
+            SqlDataReader devicesQueryResults = null;
             if (getDataCommand != null)
             {
                 try
                 {
-                    devisesQueryResults = getDataCommand.ExecuteReader();
+                    devicesQueryResults = getDataCommand.ExecuteReader();
                 }
                 catch (Exception)
                 {
-                    devisesQueryResults = null;
+                    devicesQueryResults = null;
                 }
             }
             
-            if (devisesQueryResults != null )
+            if (devicesQueryResults != null )
             {
-                devisesRecords = MapDataToList<RadioDevice>(devisesQueryResults);
-                devisesQueryResults.Close();
+                devicesRecords = MapDataToList<RadioStation>(devicesQueryResults);
+                devicesQueryResults.Close();
             }
 
-            RadioDevice[] devices = null;
-            if (devisesRecords != null)
+            RadioStation[] stations = null;
+            if (devicesRecords != null)
             {
-                devices = devisesRecords.ToArray();
+                stations = devicesRecords.ToArray();
             }
             
 
-            if (devices != null)
+            if (stations != null)
             {
-                var firstIndex = devices.GetLowerBound(0);
-                var lastIndex = devices.GetUpperBound(0);
+                var firstIndex = stations.GetLowerBound(0);
+                var lastIndex = stations.GetUpperBound(0);
 
                 for (var index = firstIndex; index <= lastIndex; index++)
                 {
-                    if (devices[index] == null) continue;
-                    var parentKey = devices[index].Guid;
+                    if (stations[index] == null) continue;
+                    var parentKey = stations[index].Guid;
                     var signalFrequenciesQueryText =
                         $@"
 SELECT 
@@ -196,7 +219,7 @@ WHERE
 
                     if ( frequencies != null )
                     {
-                        devices[index].SignalsFrequencies = frequencies;
+                        stations[index].SignalsFrequencies = frequencies;
                     }
                 }
 
@@ -207,7 +230,7 @@ WHERE
                 dbConnection?.Close();
             }
 
-            return devices;
+            return stations;
         }
 
         private static List<T> MapDataToList<T>

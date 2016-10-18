@@ -1,0 +1,229 @@
+﻿@model IList<RadioFrequencyCenter.DataBrowser.Models.RadioDevice>
+
+@{
+    if (ViewBag != null)
+    {
+        ViewBag.Title = "Browse Radio Devises";
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Radio Devises</h1>
+
+@using (Html.BeginForm("BrowseData", "RadioDevice", FormMethod.Post, new { @class = "form-inline", id = "CriteriaParameters" }))
+{
+    <fieldset>
+        <legend>Фильтры для отбора</legend>
+        <label class="label label-info ">Идентификатор, от <input type="number" name="IdRes" class = "input-small" placeholder="Глобальный уникальный идентификатор"> до <input type="number" name="IdRes1" class = "input-small"></label>
+        <label class="label label-info ">Номер свидетельства <input type="text" name="NumSvid" class = "input-medium" placeholder="Номер свидетельства"> </label>
+        <label class="label label-info ">Дата Свидетельства, от <input type="date" name="DateSvid" class = "input-medium" placeholder="Дата выдачи свидетельства"> до <input type="date" name="DateSvid1" class = "input-medium"></label>
+        <label class="label label-info ">Срок свидетельства, от <input type="date" name="SrokSvid" class = "input-medium" placeholder="Срок действия свидетельства"> до <input type="date" name="SrokSvid1" class="input-medium"></label>
+        <label class="label label-info">Регион, от <input type="number" name="Region" class = "input-small" placeholder="Код региона"> до <input type="number" name="Region1" class="input-small"></label>
+        <label class="label label-info">Заводской номер <input type="text" name="ZavNum" class = "input-medium" placeholder="Заводской номер"> </label>
+        <label class="label label-info">Широта <input type="text" name="Lat" class = "input-small" placeholder="Широта"> </label>
+        <label class="label label-info">Долгота <input type="text" name="Long" class = "input-small" placeholder="Долгота"> </label>
+        <label class="label label-info">Мак <input type="text" name="Mac" class = "input-medium" placeholder="Аппаратный адрес устройства"> </label>
+        <label class="label label-info">Другие номера <input type="text" name="Ids" class="input-medium" placeholder="Идентификаторы LAC, CI, BSID"> </label>
+        <label class="label label-info">Обновлено, от <input type="datetime-local" name="UpdateDate" class="input-large" placeholder="Дата последнего обновления записи"> до <input type="datetime-local" name="UpdateDate1" class="input-large"></label>
+        <label class="label label-info">Удалено, от <input type="datetime-local" name="DelDate" class="input-large" placeholder="Дата удаления"> до <input type="datetime-local" name="DelDate1" class="input-large"></label>
+    </fieldset>
+
+        @*<div class="control-group">
+                @Html.Label("Дата Свидетельства", new {@class = "control-label", @for = "DateSvid"})
+                <div class="controls">
+                    @Html.TextBox("DateSvid", null, new {@class = "input-medium", type = "text", placeholder = "Дата выдачи свидетельства"})
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Широта", new {@class = "control-label", @for = "Lat"})
+                <div class="controls">
+                    @Html.TextBox("Lat", null, new {@class = "input-medium", type = "text", placeholder = "Широта"})
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Мак", new {@class = "control-label", @for = "Mac" })
+                <div class="controls">
+                    @Html.TextBox("Mac", null, new { @class = "input-medium", type = "text", placeholder = "Аппаратный адрес устройства" })
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Номер свидетельства", new {@class = "control-label", @for = "NumSvid" })
+                <div class="controls">
+                    @Html.TextBox("NumSvid", null, new {@class = "input-medium", type = "text", placeholder = "Номер свидетельства" })
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Регион", new {@class = "control-label", @for = "Region" })
+                <div class="controls">
+                    @Html.TextBox("Region", null, new {@class = "input-medium", type = "text", placeholder = "Код региона" })
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Срок свидетельства", new {@class = "control-label", @for = "SrokSvid" })
+                <div class="controls">
+                    @Html.TextBox("SrokSvid", null, new {@class = "input-medium", type = "text", placeholder = "Срок действия свидетельства" })
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Обновлено", new {@class = "control-label", @for = "UpdateDate" })
+                <div class="controls">
+                    @Html.TextBox("UpdateDate", null, new {@class = "input-medium", type = "text", placeholder = "Дата последнего обновления записи" })
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Заводской номер", new {@class = "control-label", @for = "ZavNum" })
+                <div class="controls">
+                    @Html.TextBox("ZavNum", null, new {@class = "input-medium", type = "text", placeholder = "Заводской номер" })
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Удалено", new {@class = "control-label", @for = "DelDate" })
+                <div class="controls">
+                    @Html.TextBox("DelDate", null, new {@class = "input-medium", type = "text", placeholder = "Дата удаления" })
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Идентификатор", new {@class = "control-label", @for = "IdRes" })
+                <div class="controls">
+                    @Html.TextBox("IdRes", null, new {@class = "input-medium", type = "text", placeholder = "Глобальный уникальный идентификатор" })
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.Label("Другие номера", new {@class = "control-label", @for = "Ids" })
+                <div class="controls">
+                    @Html.TextBox("Ids", null, new {@class = "input-medium", type = "text", placeholder = "Идентификаторы LAC, CI, BSID" })
+                </div>
+            </div>*@
+    <div class="form-group">
+        <label class="label label-info ">Искать в интервале указанных значений <input type="checkbox" name="searchWithRange"></label>
+        <input type="reset" name="reset_form" class="btn btn-primary"/>
+        <input type="submit" value="Применить фильтры" class="btn btn-primary"/>
+    </div>
+}
+
+<div class="btn-group btn-group-lg">
+    @Html.ActionLink("на главную", "Index", "Home", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Удалить все записи", "DeleteAllRecords", "RadioDevice", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Обновить", "BrowseData", "RadioDevice", null, new { @class = "btn btn-primary" })
+</div>
+<div>
+    @{
+        var isEmptyReocordSet = Model == null;
+        if (!isEmptyReocordSet)
+        {
+            var count = Model.Count;
+            if (count == 0)
+            {
+                isEmptyReocordSet = true;
+            }
+        }
+        if (isEmptyReocordSet)
+        {
+            <p class="btn label-warning">no records found, try click button "Загрузить из источника" for add records from source</p>
+        }
+        else
+        {
+            <table class="table table-condensed table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th class="ViewBroadcastStationRecord">
+                            Подробности
+                        </th>
+                        <th class="DateSvid">
+                            DateSvid
+                        </th>
+                        <th class="Lat">
+                            Lat
+                        </th>
+                        <th class="Long">
+                            Long
+                        </th>
+                        <th class="Mac">
+                            Mac
+                        </th>
+                        <th class="NumSvid">
+                            NumSvid
+                        </th>
+                        <th class="Region">
+                            Region
+                        </th>
+                        <th class="SrokSvid">
+                            SrokSvid
+                        </th>
+                        <th class="UpdateDate">
+                            UpdateDate
+                        </th>
+                        <th class="ZavNum">
+                            ZavNum
+                        </th>
+                        <th class="DelDate">
+                            DelDate
+                        </th>
+                        <th class="IdRes">
+                            IdRes
+                        </th>
+                        <th class="Ids">
+                            Ids
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var record in Model)
+                    {
+                        if (record == null)
+                        {
+                            continue;
+                        }
+                        <tr>
+                            <td class="RecordPage">
+                                <div class="btn-group-sm">
+                                    @Html.ActionLink("Открыть", "RecordPage", new { id = record.IdRes.ToString(), controller = "RadioDevice" }, new { @class = "btn btn-info" })
+                                    <span class="btn btn-info" onclick="showPopup('/RadioDevice/RecordPopup/@record.IdRes');">Просмотр</span>
+                                </div>
+                            </td>
+                            <td class="DateSvid">
+                                @record.DateSvid
+                            </td>
+                            <td class="Lat">
+                                @record.Lat
+                            </td>
+                            <td class="Long">
+                                @record.Long
+                            </td>
+                            <td class="Mac">
+                                @record.Mac
+                            </td>
+                            <td class="NumSvid">
+                                @record.NumSvid
+                            </td>
+                            <td class="Region">
+                                @record.Region
+                            </td>
+                            <td class="SrokSvid">
+                                @record.SrokSvid
+                            </td>
+                            <td class="UpdateDate">
+                                @record.UpdateDate
+                            </td>
+                            <td class="ZavNum">
+                                @record.ZavNum
+                            </td>
+                            <td class="DelDate">
+                                @record.DelDate
+                            </td>
+                            <td class="IdRes">
+                                @record.IdRes
+                            </td>
+                            <td class="Ids">
+                                @record.Ids
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+</div>
+
+<div id="PopupWrapper"></div>
