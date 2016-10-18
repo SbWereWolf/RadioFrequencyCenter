@@ -70,10 +70,10 @@ namespace RadioFrequencyCenter.DataSource
         public int? IsDeleted { get; set; }
 
         [DataMember]
-        public DateTimeOffset? DelDate { get; set; }
+        public DateTime? DelDate { get; set; }
 
         [DataMember]
-        public DateTimeOffset? UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
 
         [DataMember]
         public SignalFrequency[] SignalsFrequencies { get; set; }
