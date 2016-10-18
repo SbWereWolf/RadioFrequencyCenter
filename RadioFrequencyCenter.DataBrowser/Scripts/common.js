@@ -3,7 +3,7 @@
 
     this.init = function () {
         $("#LoginPopup").click(function () {
-            _this.showPopup("/BroadcastStation/RecordPopup/521", initLoginPopup);
+            _this.showPopup("/RadioDevice/RecordPopup/521", initLoginPopup);
         });
     }
 
@@ -23,7 +23,7 @@
         $("#LoginButton").click(function () {
             //$.ajax({
             //    type: "POST",
-            //    url: "/BroadcastStation/RecordPopup/521",
+            //    url: "/RadioDevice/RecordPopup/521",
             //    data : $("#LoginForm").serialize(),
             //    success: function (data) {
             //        showModalData(data);

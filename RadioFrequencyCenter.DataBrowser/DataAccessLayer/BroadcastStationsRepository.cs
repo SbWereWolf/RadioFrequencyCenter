@@ -38,6 +38,31 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
             return result;
         }
 
+        public bool InsertStations(BroadcastStations[] stations)
+        {
+            var result = false;
+            var broadcastStations = BroadcastStations;
+            var context = broadcastStations?.Context;
+
+            if (broadcastStations != null && context != null && stations != null)
+            {
+                broadcastStations.InsertAllOnSubmit(stations);
+
+                try
+                {
+                    context.SubmitChanges();
+                    result = true;
+                }
+                catch (Exception)
+                {
+
+                    // throw;
+                }
+            }
+
+            return result;
+        }
+
         public bool UpdateStation(BroadcastStations instance)
         {
             var result = false;

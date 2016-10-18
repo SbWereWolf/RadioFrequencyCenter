@@ -167,7 +167,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BroadcastStationController.cs" />
+    <Compile Include="Controllers\CramDataController.cs" />
+    <Compile Include="Controllers\RadioDeviceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DataAccessLayer\BroadcastFrequenciesRepository.cs" />
     <Compile Include="DataAccessLayer\BroadcastStationsRepository.cs" />
@@ -175,10 +176,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\BroadcastFrequency.cs" />
-    <Compile Include="Proxy\BroadcastFrequencies.cs" />
-    <Compile Include="Proxy\BroadcastStations.cs" />
-    <Compile Include="Models\BroadcastStations.cs" />
+    <Compile Include="Models\CramData.cs" />
+    <Compile Include="Proxy\SignalFrequencies.cs" />
+    <Compile Include="Proxy\RadioDevices.cs" />
+    <Compile Include="Models\RadioDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataAccessLayer\RadioFrequencyCenter.designer.cs">
       <AutoGen>True</AutoGen>
@@ -248,7 +249,7 @@
     <Content Include="Scripts\knockout-2.0.0.js" />
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
     <None Include="Scripts\_references.js" />
-    <Content Include="Service References\MeasurementsApiService\RadioFrequencyCenter.DataBrowser.MeasurementsApiService.ElectronicDeviceRecord.datasource">
+    <Content Include="Service References\MeasurementsApiService\RadioFrequencyCenter.DataBrowser.MeasurementsApiService.RadioDevice.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\MeasurementsApiService\Reference.svcmap">
@@ -267,7 +268,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\BroadcastStation\AllRecords.cshtml" />
+    <Content Include="Views\RadioDevice\AllRecords.cshtml" />
     <None Include="Service References\MeasurementsApiService\RadioFrequencyCenter.DataSource.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -278,8 +279,9 @@
     <None Include="Service References\MeasurementsApiService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\BroadcastStation\RecordPage.cshtml" />
-    <Content Include="Views\BroadcastStation\RecordPopup.cshtml" />
+    <Content Include="Views\RadioDevice\RecordPage.cshtml" />
+    <Content Include="Views\RadioDevice\RecordPopup.cshtml" />
+    <Content Include="Views\CramData\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

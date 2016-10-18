@@ -1,9 +1,9 @@
-﻿@model RadioFrequencyCenter.DataBrowser.Models.BroadcastStation
+﻿@model RadioFrequencyCenter.DataBrowser.Models.RadioDevice
 
 @{
     if (ViewBag != null)
     {
-        ViewBag.Title = "BroadcastFrequency";
+        ViewBag.Title = "Radio Device";
     }
 
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,7 +14,7 @@
 <p>
     <div class="btn-group btn-group-lg">
         @Html.ActionLink("на главную", "Index", "Home", null, new { @class = "btn btn-primary" })
-        @Html.ActionLink("Работа с записями", "AllRecords", "BroadcastStation", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Работа с записями", "AllRecords", "RadioDevice", null, new { @class = "btn btn-primary" })
     </div>
 </p>
 
@@ -133,7 +133,7 @@
                 </tbody>
             </table>
 
-            @if (record.Frequencies != null)
+            @if (record.RadioSignals != null)
             {
                 <table class="table table-condensed table-hover table-bordered">
                     <thead>
@@ -153,7 +153,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var frequency in record.Frequencies)
+                    @foreach (var frequency in record.RadioSignals)
                     {
                         if (frequency != null)
                         {
