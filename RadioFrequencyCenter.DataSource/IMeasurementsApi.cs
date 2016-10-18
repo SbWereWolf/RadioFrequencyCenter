@@ -20,6 +20,11 @@ namespace RadioFrequencyCenter.DataSource
     {
         [DataMember]
         public RadioStation Station;
+
+        public SelectionCriteria()
+        {
+            Station = new RadioStation();
+        }
     }
 
     [DataContract]
