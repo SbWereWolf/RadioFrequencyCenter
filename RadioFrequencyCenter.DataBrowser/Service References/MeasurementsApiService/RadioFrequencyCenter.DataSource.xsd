@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="ElectronicDevicesSelectionCriteria">
+  <xs:complexType name="SelectionCriteria">
     <xs:sequence>
       <xs:element minOccurs="0" name="DateFrom" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DateTill" nillable="true" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ElectronicDevicesSelectionCriteria" nillable="true" type="tns:ElectronicDevicesSelectionCriteria" />
-  <xs:complexType name="ArrayOfElectronicDeviceRecord">
+  <xs:element name="SelectionCriteria" nillable="true" type="tns:SelectionCriteria" />
+  <xs:complexType name="ArrayOfRadioDevice">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ElectronicDeviceRecord" nillable="true" type="tns:ElectronicDeviceRecord" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RadioDevice" nillable="true" type="tns:RadioDevice" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfElectronicDeviceRecord" nillable="true" type="tns:ArrayOfElectronicDeviceRecord" />
-  <xs:complexType name="ElectronicDeviceRecord">
+  <xs:element name="ArrayOfRadioDevice" nillable="true" type="tns:ArrayOfRadioDevice" />
+  <xs:complexType name="RadioDevice">
     <xs:sequence>
       <xs:element minOccurs="0" name="Bsid" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CertificateIssueDate" nillable="true" type="xs:dateTime" />
@@ -34,7 +34,7 @@
       <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ElectronicDeviceRecord" nillable="true" type="tns:ElectronicDeviceRecord" />
+  <xs:element name="RadioDevice" nillable="true" type="tns:RadioDevice" />
   <xs:complexType name="ArrayOfSignalFrequency">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="SignalFrequency" nillable="true" type="tns:SignalFrequency" />

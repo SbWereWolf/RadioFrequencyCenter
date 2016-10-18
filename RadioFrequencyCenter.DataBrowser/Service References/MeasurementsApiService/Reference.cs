@@ -20,9 +20,9 @@ using System.Threading.Tasks;
 namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
     [DebuggerStepThrough()]
     [GeneratedCode("System.Runtime.Serialization", "4.0.0.0")]
-    [DataContract(Name="ElectronicDevicesSelectionCriteria", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
+    [DataContract(Name="SelectionCriteria", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
     [Serializable()]
-    public partial class ElectronicDevicesSelectionCriteria : object, IExtensibleDataObject, INotifyPropertyChanged {
+    public partial class SelectionCriteria : object, IExtensibleDataObject, INotifyPropertyChanged {
         
         [NonSerialized()]
         private ExtensionDataObject extensionDataField;
@@ -81,9 +81,9 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
     
     [DebuggerStepThrough()]
     [GeneratedCode("System.Runtime.Serialization", "4.0.0.0")]
-    [DataContract(Name="ElectronicDeviceRecord", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
+    [DataContract(Name="RadioDevice", Namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource")]
     [Serializable()]
-    public partial class ElectronicDeviceRecord : object, IExtensibleDataObject, INotifyPropertyChanged {
+    public partial class RadioDevice : object, IExtensibleDataObject, INotifyPropertyChanged {
         
         [NonSerialized()]
         private ExtensionDataObject extensionDataField;
@@ -467,11 +467,11 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
         [OperationContract(Action="http://tempuri.org/IMeasurementsApi/IsApiOnline", ReplyAction="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse")]
         Task<int> IsApiOnlineAsync();
         
-        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesData", ReplyAction="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesDataResponse")]
-        ElectronicDeviceRecord[] GetElectronicDevicesData(ElectronicDevicesSelectionCriteria selectionCriteria);
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/GetRadioDevicesData", ReplyAction="http://tempuri.org/IMeasurementsApi/GetRadioDevicesDataResponse")]
+        RadioDevice[] GetRadioDevicesData(SelectionCriteria selectionCriteria);
         
-        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesData", ReplyAction="http://tempuri.org/IMeasurementsApi/GetElectronicDevicesDataResponse")]
-        Task<ElectronicDeviceRecord[]> GetElectronicDevicesDataAsync(ElectronicDevicesSelectionCriteria selectionCriteria);
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/GetRadioDevicesData", ReplyAction="http://tempuri.org/IMeasurementsApi/GetRadioDevicesDataResponse")]
+        Task<RadioDevice[]> GetRadioDevicesDataAsync(SelectionCriteria selectionCriteria);
     }
     
     [GeneratedCode("System.ServiceModel", "4.0.0.0")]
@@ -509,12 +509,12 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             return base.Channel.IsApiOnlineAsync();
         }
         
-        public ElectronicDeviceRecord[] GetElectronicDevicesData(ElectronicDevicesSelectionCriteria selectionCriteria) {
-            return base.Channel.GetElectronicDevicesData(selectionCriteria);
+        public RadioDevice[] GetRadioDevicesData(SelectionCriteria selectionCriteria) {
+            return base.Channel.GetRadioDevicesData(selectionCriteria);
         }
         
-        public Task<ElectronicDeviceRecord[]> GetElectronicDevicesDataAsync(ElectronicDevicesSelectionCriteria selectionCriteria) {
-            return base.Channel.GetElectronicDevicesDataAsync(selectionCriteria);
+        public Task<RadioDevice[]> GetRadioDevicesDataAsync(SelectionCriteria selectionCriteria) {
+            return base.Channel.GetRadioDevicesDataAsync(selectionCriteria);
         }
     }
 }
