@@ -2,23 +2,23 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="RadioFrequencyCenter">
   <DataContextMoniker Name="/RadioFrequencyCenterDataContext" />
   <nestedChildShapes>
-    <classShape Id="8b840098-0bc3-41e5-86ae-3f7b53fe0b0e" absoluteBounds="3.375, 1.625, 2, 3.1170068359375">
-      <DataClassMoniker Name="/RadioFrequencyCenterDataContext/BroadcastStations" />
-      <nestedChildShapes>
-        <elementListCompartment Id="b4078cdd-607e-4437-b259-11018879d54d" absoluteBounds="3.3899999999999997, 2.085, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="bf418f9b-a709-4e95-9b80-467488f8cf75" absoluteBounds="6.5, 2.125, 2, 1.5785953776041666">
+    <classShape Id="7897baab-061c-46dc-a451-5fdb5a64e3d4" absoluteBounds="2.375, 1.25, 2, 1.5785953776041666">
       <DataClassMoniker Name="/RadioFrequencyCenterDataContext/BroadcastFrequencies" />
       <nestedChildShapes>
-        <elementListCompartment Id="9749fb33-edb1-4fd8-a806-55ce8b1b997e" absoluteBounds="6.5150000000000006, 2.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="d94757e2-f710-4ce2-b44a-034ebe51d981" absoluteBounds="2.3900000000000006, 1.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.375 : 2.91429768880208); (6.5 : 2.91429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RadioFrequencyCenterDataContext/BroadcastStations/BroadcastStations_BroadcastFrequencies" />
+    <classShape Id="f9c2dd73-d752-45e6-bb6d-cfb44fdf0c8c" absoluteBounds="6.75, 1.375, 2, 3.1170068359375">
+      <DataClassMoniker Name="/RadioFrequencyCenterDataContext/BroadcastStations" />
+      <nestedChildShapes>
+        <elementListCompartment Id="986da076-715d-4412-b9d4-00af517dca83" absoluteBounds="6.7650000000000006, 1.835, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.75 : 2.10179768880208); (4.375 : 2.10179768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RadioFrequencyCenterDataContext/BroadcastStations/BroadcastStation_BroadcastFrequency" />
       <nodes>
-        <classShapeMoniker Id="8b840098-0bc3-41e5-86ae-3f7b53fe0b0e" />
-        <classShapeMoniker Id="bf418f9b-a709-4e95-9b80-467488f8cf75" />
+        <classShapeMoniker Id="f9c2dd73-d752-45e6-bb6d-cfb44fdf0c8c" />
+        <classShapeMoniker Id="7897baab-061c-46dc-a451-5fdb5a64e3d4" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>
