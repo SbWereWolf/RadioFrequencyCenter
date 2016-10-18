@@ -1,0 +1,18 @@
+﻿@{
+    if (ViewBag != null )
+    {
+        ViewBag.Title = "RadioFrequencyCenter - Data Browser";
+    }
+
+}
+
+<h1>Data Browser</h1>
+
+<p>
+    <div class="menu">
+        @Html.ActionLink("Просмотр данных", "AllRecords", "RadioDevice")
+        @Html.ActionLink("Загрузка данных", "Index", "CramData")
+    </div>
+
+</p>
+
