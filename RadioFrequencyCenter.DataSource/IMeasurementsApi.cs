@@ -19,19 +19,19 @@ namespace RadioFrequencyCenter.DataSource
     public class SelectionCriteria
     {
         [DataMember]
-        public RadioStation Station;
+        public NullableRadioStation Station;
 
         public SelectionCriteria()
         {
-            Station = new RadioStation();
+            Station = new NullableRadioStation();
         }
     }
 
     [DataContract]
-    public class RadioStation
+    public class NullableRadioStation
     {
         [DataMember]
-        public Guid Guid { get; set; }
+        public Guid? Guid { get; set; }
 
         [DataMember]
         public int? FactoryNumber { get; set; }
@@ -78,6 +78,58 @@ namespace RadioFrequencyCenter.DataSource
         [DataMember]
         public SignalFrequency[] SignalsFrequencies { get; set; }
     }
+
+    [DataContract]
+    public class RadioStation
+    {
+        [DataMember]
+        public Guid Guid { get; set; }
+
+        [DataMember]
+        public int FactoryNumber { get; set; }
+
+        [DataMember]
+        public string CertificateNumber { get; set; }
+
+        [DataMember]
+        public DateTime CertificateIssueDate { get; set; }
+
+        [DataMember]
+        public DateTime CertificateValidDate { get; set; }
+
+        [DataMember]
+        public double SpRegionGai { get; set; }
+
+        [DataMember]
+        public string LocationLattitude { get; set; }
+
+        [DataMember]
+        public string LocationLongitude { get; set; }
+
+        [DataMember]
+        public string Lac { get; set; }
+
+        [DataMember]
+        public string Ci { get; set; }
+
+        [DataMember]
+        public string Bsid { get; set; }
+
+        [DataMember]
+        public string Mac { get; set; }
+
+        [DataMember]
+        public int IsDeleted { get; set; }
+
+        [DataMember]
+        public DateTimeOffset DelDate { get; set; }
+
+        [DataMember]
+        public DateTimeOffset UpdateDate { get; set; }
+
+        [DataMember]
+        public SignalFrequency[] SignalsFrequencies { get; set; }
+    }
     [DataContract]
     public class SignalFrequency
     {
@@ -85,12 +137,12 @@ namespace RadioFrequencyCenter.DataSource
         public Guid Guid { get; set; }
 
         [DataMember]
-        public Guid? Res { get; set; }
+        public Guid Res { get; set; }
 
         [DataMember]
-        public double? Tn { get; set; }
+        public double Tn { get; set; }
 
         [DataMember]
-        public double? Rn { get; set; }
+        public double Rn { get; set; }
     }
 }
