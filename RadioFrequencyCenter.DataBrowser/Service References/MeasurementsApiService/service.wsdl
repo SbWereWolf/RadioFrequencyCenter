@@ -13,7 +13,6 @@
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/RadioFrequencyCenter.DataSource" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMeasurementsApi_IsApiOnline_InputMessage">
@@ -22,20 +21,20 @@
   <wsdl:message name="IMeasurementsApi_IsApiOnline_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsApiOnlineResponse" />
   </wsdl:message>
-  <wsdl:message name="IMeasurementsApi_GetRadioStationsAndSignals_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetRadioStationsAndSignals" />
+  <wsdl:message name="IMeasurementsApi_GetRadioDevicesData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRadioDevicesData" />
   </wsdl:message>
-  <wsdl:message name="IMeasurementsApi_GetRadioStationsAndSignals_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetRadioStationsAndSignalsResponse" />
+  <wsdl:message name="IMeasurementsApi_GetRadioDevicesData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRadioDevicesDataResponse" />
   </wsdl:message>
   <wsdl:portType name="IMeasurementsApi">
     <wsdl:operation name="IsApiOnline">
       <wsdl:input wsaw:Action="http://tempuri.org/IMeasurementsApi/IsApiOnline" message="tns:IMeasurementsApi_IsApiOnline_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse" message="tns:IMeasurementsApi_IsApiOnline_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetRadioStationsAndSignals">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignals" message="tns:IMeasurementsApi_GetRadioStationsAndSignals_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignalsResponse" message="tns:IMeasurementsApi_GetRadioStationsAndSignals_OutputMessage" />
+    <wsdl:operation name="GetRadioDevicesData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMeasurementsApi/GetRadioDevicesData" message="tns:IMeasurementsApi_GetRadioDevicesData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMeasurementsApi/GetRadioDevicesDataResponse" message="tns:IMeasurementsApi_GetRadioDevicesData_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CustomBinding_IMeasurementsApi" type="tns:IMeasurementsApi">
@@ -50,8 +49,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetRadioStationsAndSignals">
-      <soap12:operation soapAction="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignals" style="document" />
+    <wsdl:operation name="GetRadioDevicesData">
+      <soap12:operation soapAction="http://tempuri.org/IMeasurementsApi/GetRadioDevicesData" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

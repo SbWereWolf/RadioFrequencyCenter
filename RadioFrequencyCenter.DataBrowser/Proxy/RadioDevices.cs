@@ -211,11 +211,5 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             }
             return broadcastStations;
         }
-
-        public DateTimeOffset? GetLastUpdateDate()
-        {
-            var result = Repository?.BroadcastStations?.Max(r => r.UPDATE_DATE);
-            return result;
-        }
     }
 }
