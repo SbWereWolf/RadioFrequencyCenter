@@ -266,7 +266,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\RadioDevice\AllRecords.cshtml" />
+    <Content Include="Views\RadioDevice\BrowseData.cshtml" />
     <None Include="Service References\MeasurementsApiService\RadioFrequencyCenter.DataSource.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -280,9 +280,6 @@
     <Content Include="Views\RadioDevice\RecordPage.cshtml" />
     <Content Include="Views\RadioDevice\RecordPopup.cshtml" />
     <Content Include="Views\CramData\Index.cshtml" />
-    <None Include="Service References\MeasurementsApiService\System.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

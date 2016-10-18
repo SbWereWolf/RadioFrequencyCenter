@@ -29,7 +29,7 @@ namespace RadioFrequencyCenter.DataSource
             var stationCriteria = selectionCriteria?.Station;
             var isEmptyCriteriaObject = stationCriteria == null;
 
-            DateTimeOffset? updatedate = null;
+            DateTime? updatedate = null;
             var numsvid = string.Empty;
             int? zavnum = null;
 

@@ -27,9 +27,9 @@ namespace RadioFrequencyCenter.DataBrowser.Controllers
             
             var crammer = new CramData();
             var stationCriteria = crammer.SelectionCriteria?.Station;
-            if (stationCriteria != null)
+            if (stationCriteria != null && dateupdate.HasValue )
             {
-                stationCriteria.UpdateDate = dateupdate;
+                stationCriteria.UpdateDate = dateupdate.Value.LocalDateTime ;
             }
 
             // ReSharper disable UnusedVariable
