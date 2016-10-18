@@ -26,6 +26,7 @@
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="6b3cfbfc-33e7-4866-a5bc-82b3fd98d4ee" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/RadioFrequencyCenter.DataSource/MeasurementsApi/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="cea796a0-8e67-445b-8212-7f904e2fdcbb" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/RadioFrequencyCenter.DataSource/MeasurementsApi/mex" />
     <MetadataFile FileName="RadioFrequencyCenter.DataSource.xsd" MetadataType="Schema" ID="a4f80324-6ee4-4f7d-88e6-f56968945898" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/RadioFrequencyCenter.DataSource/MeasurementsApi/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="de630307-6090-4c86-91b7-72485ec4465c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/RadioFrequencyCenter.DataSource/MeasurementsApi/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
