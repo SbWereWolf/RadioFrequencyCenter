@@ -266,7 +266,7 @@ WHERE
                     {
                         info.SetValue(newObject, fieldValue, null);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         //throw;
                     }
