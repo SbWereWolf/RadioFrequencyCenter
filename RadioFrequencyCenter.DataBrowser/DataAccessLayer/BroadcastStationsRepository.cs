@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 
@@ -38,7 +39,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
             return result;
         }
 
-        public bool InsertStations(BroadcastStations[] stations)
+        public bool InsertStations(IEnumerable<BroadcastStations> stations)
         {
             var result = false;
             var broadcastStations = BroadcastStations;
@@ -82,6 +83,9 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
                     cache.NUM_SVID = instance.NUM_SVID;
                     cache.REGION = instance.REGION;
                     cache.SROK_SVID = instance.SROK_SVID;
+                    cache.StationFrequencies = instance.StationFrequencies;
+                    cache.UPDATE_DATE = instance.UPDATE_DATE;
+                    cache.ZAV_NUM = instance.ZAV_NUM;
 
                     try
                     {
@@ -94,6 +98,23 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
                     }
                 }
             }
+
+            return result;
+        }
+
+        public bool UpdateStations(IEnumerable<BroadcastStations> stations)
+        {
+            var result = true;
+
+            if (stations != null)
+                foreach (var station in stations)
+                {
+                    var nextResult = UpdateStation(station);
+                    if ( !nextResult)
+                    {
+                        result = false;
+                    }
+                }
 
             return result;
         }

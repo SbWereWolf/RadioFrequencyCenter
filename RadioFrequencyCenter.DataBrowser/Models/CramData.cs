@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Ajax.Utilities;
 using RadioFrequencyCenter.DataBrowser.MeasurementsApiService;
 using RadioFrequencyCenter.DataBrowser.Proxy;
@@ -41,22 +42,24 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                             SrokSvid= rawRecord.CertificateValidDate,
                             UpdateDate= rawRecord.UpdateDate,
                             ZavNum= rawRecord.FactoryNumber?.ToStringInvariant(),
-                            RadioSignals= new RadioDevice.SignalFrequency[] {}
+                            RadioSignals= new RadioDevice.DeviceSignal[] {},
+                            Guid = rawRecord.Guid
                         };
 
                         var signalsFrequencies = rawRecord.SignalsFrequencies;
                         if (signalsFrequencies?.Length > 0)
                         {
-                            var frequencies = new List<RadioDevice.SignalFrequency>();
+                            var frequencies = new List<RadioDevice.DeviceSignal>();
 
                             foreach (var frequrency in signalsFrequencies)
                             {
                                 if (frequrency != null)
                                 {
-                                    var signalFrequency = new RadioDevice.SignalFrequency
+                                    var signalFrequency = new RadioDevice.DeviceSignal
                                     {
                                         Rn= frequrency.Rn,
-                                        Tn= frequrency.Tn
+                                        Tn= frequrency.Tn,
+                                        Guid = frequrency.Guid
                                     };
                                     frequencies.Add(signalFrequency);
                                 }
@@ -73,13 +76,29 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                 }
             }
 
-            var proxy = new RadioDevices();
-            if (proxy.Repository != null)
+            var guidProxy = new ResUpdatedates();
+
+            var radioDevicesForUpdate = guidProxy.getForUpdate(radioDevices);
+            IEnumerable<RadioDevice> radioDevicesForInsert = guidProxy.GetForInsert(radioDevices);
+
+
+            var devicesProxy = new RadioDevices();
+            if (devicesProxy.Repository != null
+                && radioDevicesForInsert!= null)
             {
-                var isSuccess = proxy.InsertStations(radioDevices);
+                
+                var isSuccess = devicesProxy.InsertStations(radioDevicesForInsert);
                 if (isSuccess)
                 {
                     result = true;
+                }
+            }
+            if (radioDevicesForUpdate != null)
+            {
+                if (radioDevicesForUpdate.Any())
+                {
+                    var isSuccess = devicesProxy.UpdateStations(radioDevicesForInsert);
+                    result = isSuccess && result;
                 }
             }
 

@@ -2,11 +2,11 @@
 
 namespace RadioFrequencyCenter.DataBrowser.Proxy
 {
-    public class SignalFrequencies
+    public class DeviceSignals
     {
         public BroadcastFrequenciesRepository Repository { get; }
 
-        public SignalFrequencies()
+        public DeviceSignals()
         {
             var broadcastFrequenciesRepository = new BroadcastFrequenciesRepository();
             Repository = broadcastFrequenciesRepository;

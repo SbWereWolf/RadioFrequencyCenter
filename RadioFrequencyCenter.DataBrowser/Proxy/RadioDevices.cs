@@ -17,19 +17,19 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             public bool IsPrimaryIdResNull = true;
             public bool IsSecondaryIdResNull = true;
             public  bool LetUseSecondary { get; private set; }
-
+            // string parametes
             private const string PrimaryNumSvid = "NumSvid";
             private const string PrimaryZavNum = "ZavNum";
             private const string PrimaryLat = "Lat";
             private const string PrimaryLong = "Long";
             private const string PrimaryMac = "Mac";
             private const string PrimaryIds = "Ids";
-
+            // numeric parameters
             private const string PrimaryIdRes = "IdRes";
             private const string SecondaryIdRes = "IdRes1";
             private const string PrimaryRegion = "Region";
             private const string SecondaryRegion = "Region1";
-
+            // date parametes
             private const string PrimaryDateSvid = "DateSvid";
             private const string SecondaryDateSvid = "DateSvid1";
             private const string PrimarySrokSvid = "SrokSvid";
@@ -38,7 +38,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             private const string SecondaryUpdateDate = "UpdateDate1";
             private const string PrimaryDelDate = "DelDate";
             private const string SecondaryDelDate = "DelDate1";
-
+            // checkbox
             private const string LetUseSecondaryName = "searchWithRange";
 
             public SelectionCriteria()
@@ -173,7 +173,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             var broadcastStations  = Repository?.BroadcastStations;
             var stationsContext = broadcastStations?.Context;
 
-            var frequencies = new SignalFrequencies();
+            var frequencies = new DeviceSignals();
             var broadcastFrequencies = frequencies.Repository?.BroadcastFrequencies;
             var frequenciesContext = broadcastFrequencies?.Context;
 
@@ -197,7 +197,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             return result;
         }
 
-        public List<RadioDevice> SelectRecords()
+        public List<RadioDevice> FetchRecords()
         {
             var allRecords = new List<RadioDevice>();
             if (Repository?.BroadcastStations != null)
@@ -211,9 +211,9 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
                     var useSecondary = Criteria.LetUseSecondary;
 
                     records = SelectStringFields(primary, records);
-                    records = SelectByPrimaryAndSecondaryCriteria(useSecondary, primary, secondary, records);
-                    records = SelectBySecondaryCriteria(useSecondary, primary, records);
-
+                    records = useSecondary 
+                        ? SelectByPrimaryAndSecondaryCriteria(primary, secondary, records)
+                        : SelectByPrimaryCriteria(primary, records);
                 }
 
                 var selectedRecords = records?.ToArray();
@@ -250,160 +250,97 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             return allRecords;
         }
 
-        private IQueryable<BroadcastStations> SelectBySecondaryCriteria(bool useSecondary, RadioDevice primary, IQueryable<BroadcastStations> records)
+        private IQueryable<BroadcastStations> SelectByPrimaryCriteria(RadioDevice primary, IQueryable<BroadcastStations> records)
         {
-            if (!useSecondary && primary != null && records != null)
+            if ( primary != null && records != null)
+            {
+                if (primary.Region.HasValue)
+                {
+                    records = records.Where(x => x.REGION == primary.Region);
+                }
+                if (Criteria!= null)
+                {
+                    if (!Criteria.IsPrimaryIdResNull)
+                    {
+                        records = records.Where(x => x.ID_RES == primary.IdRes);
+                    }
+                }
+
+                if (primary.UpdateDate.HasValue)
+                {
+                    records = records.Where(x => x.UPDATE_DATE >= primary.UpdateDate.Value.Date || x.UPDATE_DATE <= primary.UpdateDate.Value.Date.AddDays(1) );
+                }
+                if (primary.DateSvid.HasValue)
+                {
+                    records = records.Where(x => x.DATE_SVID >= primary.DateSvid.Value.Date || x.DATE_SVID <= primary.DateSvid.Value.Date.AddDays(1) );
+                }
+                if (primary.DelDate.HasValue)
+                {
+                    records = records.Where(x => x.DEL_DATE >= primary.DelDate.Value.Date || x.DEL_DATE <= primary.DelDate.Value.Date.AddDays(1) );
+                }
+                if (primary.SrokSvid.HasValue)
+                {
+                    records = records.Where(x => x.SROK_SVID >= primary.SrokSvid.Value.Date || x.SROK_SVID <= primary.SrokSvid.Value.Date.AddDays(1) );
+                }
+            }
+            return records;
+        }
+
+        private IQueryable<BroadcastStations> SelectByPrimaryAndSecondaryCriteria(RadioDevice primary, RadioDevice secondary, IQueryable<BroadcastStations> records)
+        {
+            if ( primary != null && secondary != null && records != null )
             {
                 if (primary.Region.HasValue)
                 {
                     records = records.Where(x => x.REGION >= primary.Region);
                 }
+                if (secondary.Region.HasValue)
+                {
+                    records = records.Where(x => x.REGION <= secondary.Region);
+                }
+
                 if (Criteria!= null)
                 {
                     if (!Criteria.IsPrimaryIdResNull)
                     {
                         records = records.Where(x => x.ID_RES >= primary.IdRes);
                     }
+                    if (!Criteria.IsSecondaryIdResNull)
+                    {
+                        records = records.Where(x => x.ID_RES <= secondary.IdRes);
+                    }
                 }
-
-                if (primary.UpdateDate.HasValue)
+                if (primary.UpdateDate.HasValue )
                 {
                     records = records.Where(x => x.UPDATE_DATE >= primary.UpdateDate);
+                }
+                if (secondary.UpdateDate.HasValue)
+                {
+                    records = records.Where(x => x.UPDATE_DATE <= secondary.UpdateDate);
                 }
                 if (primary.DateSvid.HasValue)
                 {
                     records = records.Where(x => x.DATE_SVID >= primary.DateSvid);
                 }
-                if (primary.DelDate.HasValue)
+                if (secondary.DateSvid.HasValue)
+                {
+                    records = records.Where(x => x.DATE_SVID <= secondary.DateSvid);
+                }
+                if (primary.DelDate.HasValue )
                 {
                     records = records.Where(x => x.DEL_DATE >= primary.DelDate);
                 }
-                if (primary.SrokSvid.HasValue)
+                if (secondary.DelDate.HasValue)
+                {
+                    records = records.Where(x => x.DEL_DATE <= secondary.DelDate);
+                }
+                if (primary.SrokSvid.HasValue )
                 {
                     records = records.Where(x => x.SROK_SVID >= primary.SrokSvid);
                 }
-            }
-            return records;
-        }
-
-        private IQueryable<BroadcastStations> SelectByPrimaryAndSecondaryCriteria(bool useSecondary, RadioDevice primary, RadioDevice secondary,
-            IQueryable<BroadcastStations> records)
-        {
-            if (useSecondary && primary != null && secondary != null && records != null )
-            {
-                if (primary.Region.HasValue && secondary.Region.HasValue)
+                if (secondary.SrokSvid.HasValue)
                 {
-                    records = records.Where(x => x.REGION >= primary.Region && x.REGION <= secondary.Region);
-                }
-                else
-                {
-                    if (primary.Region.HasValue && !secondary.Region.HasValue)
-                    {
-                        records = records.Where(x => x.REGION >= primary.Region);
-                    }
-                    else
-                    {
-                        if (!primary.Region.HasValue && secondary.Region.HasValue)
-                        {
-                            records = records.Where(x => x.REGION <= secondary.Region);
-                        }
-                    }
-                }
-
-                if (Criteria!= null)
-                {
-                    if (!Criteria.IsPrimaryIdResNull && !Criteria.IsSecondaryIdResNull)
-                    {
-                        records = records.Where(x => x.ID_RES >= primary.IdRes && x.ID_RES <= secondary.IdRes);
-                    }
-                    else
-                    {
-                        if (!Criteria.IsPrimaryIdResNull && Criteria.IsSecondaryIdResNull)
-                        {
-                            records = records.Where(x => x.ID_RES >= primary.IdRes);
-                        }
-                        else
-                        {
-                            if (Criteria.IsPrimaryIdResNull && !Criteria.IsSecondaryIdResNull)
-                            {
-                                records = records.Where(x => x.ID_RES <= secondary.IdRes);
-                            }
-                        }
-                    }
-                }
-
-
-                if (primary.UpdateDate.HasValue && secondary.UpdateDate.HasValue)
-                {
-                    records = records.Where(x => x.UPDATE_DATE >= primary.UpdateDate && x.UPDATE_DATE <= secondary.UpdateDate);
-                }
-                else
-                {
-                    if (primary.UpdateDate.HasValue && !secondary.UpdateDate.HasValue)
-                    {
-                        records = records.Where(x => x.UPDATE_DATE >= primary.UpdateDate);
-                    }
-                    else
-                    {
-                        if (!primary.UpdateDate.HasValue && secondary.UpdateDate.HasValue)
-                        {
-                            records = records.Where(x => x.UPDATE_DATE <= secondary.UpdateDate);
-                        }
-                    }
-                }
-                if (primary.DateSvid.HasValue && secondary.DateSvid.HasValue)
-                {
-                    records = records.Where(x => x.DATE_SVID >= primary.DateSvid && x.DATE_SVID <= secondary.DateSvid);
-                }
-                else
-                {
-                    if (primary.DateSvid.HasValue && !secondary.DateSvid.HasValue)
-                    {
-                        records = records.Where(x => x.DATE_SVID >= primary.DateSvid);
-                    }
-                    else
-                    {
-                        if (!primary.DateSvid.HasValue && secondary.DateSvid.HasValue)
-                        {
-                            records = records.Where(x => x.DATE_SVID <= secondary.DateSvid);
-                        }
-                    }
-                }
-                if (primary.DelDate.HasValue && secondary.DelDate.HasValue)
-                {
-                    records = records.Where(x => x.DEL_DATE >= primary.DelDate && x.DEL_DATE <= secondary.DelDate);
-                }
-                else
-                {
-                    if (primary.DelDate.HasValue && !secondary.DelDate.HasValue)
-                    {
-                        records = records.Where(x => x.DEL_DATE >= primary.DelDate);
-                    }
-                    else
-                    {
-                        if (!primary.DelDate.HasValue && secondary.DelDate.HasValue)
-                        {
-                            records = records.Where(x => x.DEL_DATE <= secondary.DelDate);
-                        }
-                    }
-                }
-                if (primary.SrokSvid.HasValue && secondary.SrokSvid.HasValue)
-                {
-                    records = records.Where(x => x.SROK_SVID >= primary.SrokSvid && x.SROK_SVID <= secondary.SrokSvid);
-                }
-                else
-                {
-                    if (primary.SrokSvid.HasValue && !secondary.SrokSvid.HasValue)
-                    {
-                        records = records.Where(x => x.SROK_SVID >= primary.SrokSvid);
-                    }
-                    else
-                    {
-                        if (!primary.SrokSvid.HasValue && secondary.SrokSvid.HasValue)
-                        {
-                            records = records.Where(x => x.SROK_SVID <= secondary.SrokSvid);
-                        }
-                    }
+                    records = records.Where(x => x.SROK_SVID <= secondary.SrokSvid);
                 }
             }
             return records;
@@ -445,60 +382,58 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
         {   
             RadioDevice device = null;
 
-            BroadcastStations stationRecord = null;
-            var repositoryData = Repository?.BroadcastStations?.Where(r => r.ID_RES == id).ToArray();
-            if (repositoryData?.Length > 0)
+            var repository = Repository?.BroadcastStations; 
+            if (repository != null)
             {
-                const long firstIndex = 0;
-                stationRecord = repositoryData[firstIndex];
-            }
+                var stationRecord = repository.FirstOrDefault(r => r.ID_RES == id);
 
-            if (stationRecord != null)
-            {
-                device = new RadioDevice
+                if (stationRecord != null)
                 {
-                    DateSvid = stationRecord.DATE_SVID,
-                    DelDate = stationRecord.DATE_SVID,
-                    IdRes = stationRecord.ID_RES,
-                    Ids = stationRecord.IDS,
-                    Lat = stationRecord.LAT,
-                    Long = stationRecord.LONG,
-                    Mac = stationRecord.MAC,
-                    NumSvid = stationRecord.NUM_SVID,
-                    Region = stationRecord.REGION,
-                    SrokSvid = stationRecord.SROK_SVID,
-                    UpdateDate = stationRecord.UPDATE_DATE,
-                    ZavNum = stationRecord.ZAV_NUM
-                };
-            }
-            var signals = new List<RadioDevice.SignalFrequency>();
-            if (stationRecord?.BroadcastFrequencies != null)
-            {
-                var frequenciesRecords = stationRecord.BroadcastFrequencies;
-                foreach (var frequencyRecord in frequenciesRecords)
-                {
-                    if (frequencyRecord != null)
+                    device = new RadioDevice
                     {
-                        var signal = new RadioDevice.SignalFrequency
+                        DateSvid = stationRecord.DATE_SVID,
+                        DelDate = stationRecord.DATE_SVID,
+                        IdRes = stationRecord.ID_RES,
+                        Ids = stationRecord.IDS,
+                        Lat = stationRecord.LAT,
+                        Long = stationRecord.LONG,
+                        Mac = stationRecord.MAC,
+                        NumSvid = stationRecord.NUM_SVID,
+                        Region = stationRecord.REGION,
+                        SrokSvid = stationRecord.SROK_SVID,
+                        UpdateDate = stationRecord.UPDATE_DATE,
+                        ZavNum = stationRecord.ZAV_NUM
+                    };
+                }
+                var signals = new List<RadioDevice.DeviceSignal>();
+                if (stationRecord?.StationFrequencies!= null)
+                {
+                    var frequenciesRecords = stationRecord.StationFrequencies;
+                    foreach (var frequencyRecord in frequenciesRecords)
+                    {
+                        if (frequencyRecord != null)
                         {
-                            Res = frequencyRecord.RES,
-                            IdF = frequencyRecord.ID_F,
-                            Rn = frequencyRecord.RN,
-                            Tn = frequencyRecord.TN
-                        };
-                        signals.Add(signal);
+                            var signal = new RadioDevice.DeviceSignal
+                            {
+                                Res = frequencyRecord.RES,
+                                IdF = frequencyRecord.ID_F,
+                                Rn = frequencyRecord.RN,
+                                Tn = frequencyRecord.TN
+                            };
+                            signals.Add(signal);
+                        }
                     }
                 }
-            }
-            if (device != null)
-            {
-                device.RadioSignals = signals.ToArray();
+                if (device != null)
+                {
+                    device.RadioSignals = signals.ToArray();
+                }
             }
             return device;
         }
 
 
-        public bool InsertStations(List<RadioDevice> radioDevices)
+        public bool InsertStations(IEnumerable<RadioDevice> radioDevices)
         {
             var result = false;
             
@@ -506,17 +441,33 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             if (broadcastStationsRepository != null)
             {
                 var broadcastStations = RadioDevicesToBroadcastStations(radioDevices);
-                var broadcastStationsArray = broadcastStations?.ToArray();
 
-                if (broadcastStationsArray?.Length > 0)
+                if (broadcastStations != null)
                 {
-                    result = broadcastStationsRepository.InsertStations(broadcastStationsArray);
+                    result = broadcastStationsRepository.InsertStations(broadcastStations);
                 }
             }
             return result;
         }
 
-        private static EntitySet<BroadcastStations> RadioDevicesToBroadcastStations(List<RadioDevice> radioDevices)
+        public bool UpdateStations(IEnumerable<RadioDevice> radioDevices)
+        {
+            var result = false;
+
+            var broadcastStationsRepository = Repository;
+            if (broadcastStationsRepository != null)
+            {
+                var broadcastStations = RadioDevicesToBroadcastStations(radioDevices);
+
+                if (broadcastStations != null)
+                {
+                    result = broadcastStationsRepository.UpdateStations(broadcastStations);
+                }
+            }
+            return result;
+        }
+
+        private static IEnumerable<BroadcastStations> RadioDevicesToBroadcastStations(IEnumerable<RadioDevice> radioDevices)
         {
             var broadcastStations = new EntitySet<BroadcastStations>();
             if (radioDevices != null)
@@ -543,14 +494,14 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
 
                         var radioSignals = device.RadioSignals;
                         var length = radioSignals?.Length;
-                        var broadcastFrequencies = new EntitySet<BroadcastFrequencies>();
+                        var broadcastFrequencies = new EntitySet<StationFrequencies>();
                         if (length > 0)
                         {
                             foreach (var signal in radioSignals)
                             {
                                 if (signal != null)
                                 {
-                                    var frequrency = new BroadcastFrequencies
+                                    var frequrency = new StationFrequencies
                                     {
                                         RN = signal.Rn,
                                         TN = signal.Tn
@@ -560,7 +511,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
                             }
                         }
 
-                        station.BroadcastFrequencies = broadcastFrequencies;
+                        station.StationFrequencies = broadcastFrequencies;
 
                         broadcastStations.Add(station);
                     }

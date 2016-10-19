@@ -8,12 +8,12 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
     {
         public BroadcastFrequenciesRepository()
         {
-            BroadcastFrequencies = RepositoryData?.BroadcastFrequencies;
+            BroadcastFrequencies = RepositoryData?.StationFrequencies;
         }
 
-        public Table<BroadcastFrequencies> BroadcastFrequencies { get; }
+        public Table<StationFrequencies> BroadcastFrequencies { get; }
 
-        public bool InsertFrequency(BroadcastFrequencies instance)
+        public bool InsertFrequency(StationFrequencies instance)
         {
             var result = false;
             var frequencies = BroadcastFrequencies;
@@ -35,7 +35,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
             return result;
         }
 
-        public bool UpdateFrequency(BroadcastFrequencies instance)
+        public bool UpdateFrequency(StationFrequencies instance)
         {
             var result = false;
             var frequencies = BroadcastFrequencies;

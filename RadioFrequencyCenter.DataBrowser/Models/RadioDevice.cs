@@ -8,41 +8,31 @@ namespace RadioFrequencyCenter.DataBrowser.Models
     public class RadioDevice
     {
         public long IdRes { get; set; }
-
         public string ZavNum { get; set; }
-
         public string NumSvid { get; set; }
-
         public DateTime? DateSvid { get; set; }
-
         public DateTime? SrokSvid { get; set; }
-
         public double? Region { get; set; }
-
         public string Lat { get; set; }
-
         public string Long { get; set; }
-
         public string Ids { get; set; }
-
         public string Mac { get; set; }
-
         public DateTimeOffset? DelDate { get; set; }
-
         public DateTimeOffset? UpdateDate { get; set; }
+        public DeviceSignal[] RadioSignals { get; set; }
+        public Guid? Guid { get; set; }
 
-        public SignalFrequency[] RadioSignals { get; set; }
-
-        public class SignalFrequency
+        public class DeviceSignal
         {
             public long IdF { get; set; }
             public long Res { get; set; }
             public double? Tn { get; set; }
             public double? Rn { get; set; }
+            public Guid? Guid { get; set; }
 
-            //public static List<SignalFrequency> GetFrequencyRecords(BroadcastStations instance)
+            //public static List<DeviceSignal> GetFrequencyRecords(BroadcastStations instance)
             //{
-            //    var frequencyRecords = new List<SignalFrequency>();
+            //    var frequencyRecords = new List<DeviceSignal>();
 
             //    var broadcastFrequencies = instance?.BroadcastFrequencies;
             //    if (instance != null && broadcastFrequencies!= null)
@@ -53,7 +43,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
             //        {
             //            if (repositoryRecord != null)
             //            {
-            //                var record = new SignalFrequency
+            //                var record = new DeviceSignal
             //                {
             //                    IdF = repositoryRecord.ID_F,
             //                    Res= repositoryRecord.RES,
@@ -66,13 +56,6 @@ namespace RadioFrequencyCenter.DataBrowser.Models
             //    }
             //    return frequencyRecords;
             //}
-        }
-
-        public static List<RadioDevice> GetRecords()
-        {
-            var repository = new RadioDevices();
-            var allRecords = repository.SelectRecords();
-            return allRecords;
         }
 
         public bool Boot(string recordId )
@@ -118,18 +101,18 @@ namespace RadioFrequencyCenter.DataBrowser.Models
 
         public static List<RadioDevice> SearchRadioDevice(NameValueCollection requestForm)
         {
-            Proxy.RadioDevices radioDevices = null;
+            RadioDevices radioDevices = null;
             if (requestForm != null)
             {
                 //var requestForm = Request.Form;
-                radioDevices = new Proxy.RadioDevices();
+                radioDevices = new RadioDevices();
                 radioDevices.Criteria?.DefineCriteria(requestForm);
             }
 
             List<RadioDevice> allRecords = null;
             if (radioDevices != null)
             {
-                allRecords = radioDevices.SelectRecords();
+                allRecords = radioDevices.FetchRecords();
             }
             return allRecords;
         }

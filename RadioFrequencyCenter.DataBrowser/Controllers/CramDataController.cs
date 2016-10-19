@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using RadioFrequencyCenter.DataBrowser.Models;
+using RadioFrequencyCenter.DataBrowser.Proxy;
 
 namespace RadioFrequencyCenter.DataBrowser.Controllers
 {
@@ -22,7 +23,7 @@ namespace RadioFrequencyCenter.DataBrowser.Controllers
         }
         public ActionResult CramNewerOnly()
         {
-            var proxy = new Proxy.RadioDevices();
+            var proxy = new RadioDevices();
             var dateupdate = proxy.GetLastUpdateDate();
             
             var crammer = new CramData();

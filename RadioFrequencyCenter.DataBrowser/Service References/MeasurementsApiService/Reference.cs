@@ -8,33 +8,40 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.CodeDom.Compiler;
+using System.Diagnostics;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Threading.Tasks;
+using RadioFrequencyCenter.DataSource;
+
 namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
     
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MeasurementsApiService.IMeasurementsApi")]
+    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
+    [ServiceContract(ConfigurationName="MeasurementsApiService.IMeasurementsApi")]
     public interface IMeasurementsApi {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMeasurementsApi/IsApiOnline", ReplyAction="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse")]
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/IsApiOnline", ReplyAction="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse")]
         int IsApiOnline();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMeasurementsApi/IsApiOnline", ReplyAction="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse")]
-        System.Threading.Tasks.Task<int> IsApiOnlineAsync();
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/IsApiOnline", ReplyAction="http://tempuri.org/IMeasurementsApi/IsApiOnlineResponse")]
+        Task<int> IsApiOnlineAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignals", ReplyAction="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignalsResponse")]
-        RadioFrequencyCenter.DataSource.RadioStation[] GetRadioStationsAndSignals(RadioFrequencyCenter.DataSource.SelectionCriteria selectionCriteria);
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignals", ReplyAction="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignalsResponse")]
+        RadioStation[] GetRadioStationsAndSignals(SelectionCriteria selectionCriteria);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignals", ReplyAction="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignalsResponse")]
-        System.Threading.Tasks.Task<RadioFrequencyCenter.DataSource.RadioStation[]> GetRadioStationsAndSignalsAsync(RadioFrequencyCenter.DataSource.SelectionCriteria selectionCriteria);
+        [OperationContract(Action="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignals", ReplyAction="http://tempuri.org/IMeasurementsApi/GetRadioStationsAndSignalsResponse")]
+        Task<RadioStation[]> GetRadioStationsAndSignalsAsync(SelectionCriteria selectionCriteria);
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IMeasurementsApiChannel : RadioFrequencyCenter.DataBrowser.MeasurementsApiService.IMeasurementsApi, System.ServiceModel.IClientChannel {
+    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
+    public interface IMeasurementsApiChannel : IMeasurementsApi, IClientChannel {
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MeasurementsApiClient : System.ServiceModel.ClientBase<RadioFrequencyCenter.DataBrowser.MeasurementsApiService.IMeasurementsApi>, RadioFrequencyCenter.DataBrowser.MeasurementsApiService.IMeasurementsApi {
+    [DebuggerStepThrough()]
+    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
+    public partial class MeasurementsApiClient : ClientBase<IMeasurementsApi>, IMeasurementsApi {
         
         public MeasurementsApiClient() {
         }
@@ -47,11 +54,11 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public MeasurementsApiClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public MeasurementsApiClient(string endpointConfigurationName, EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public MeasurementsApiClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public MeasurementsApiClient(Binding binding, EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
@@ -59,15 +66,15 @@ namespace RadioFrequencyCenter.DataBrowser.MeasurementsApiService {
             return base.Channel.IsApiOnline();
         }
         
-        public System.Threading.Tasks.Task<int> IsApiOnlineAsync() {
+        public Task<int> IsApiOnlineAsync() {
             return base.Channel.IsApiOnlineAsync();
         }
         
-        public RadioFrequencyCenter.DataSource.RadioStation[] GetRadioStationsAndSignals(RadioFrequencyCenter.DataSource.SelectionCriteria selectionCriteria) {
+        public RadioStation[] GetRadioStationsAndSignals(SelectionCriteria selectionCriteria) {
             return base.Channel.GetRadioStationsAndSignals(selectionCriteria);
         }
         
-        public System.Threading.Tasks.Task<RadioFrequencyCenter.DataSource.RadioStation[]> GetRadioStationsAndSignalsAsync(RadioFrequencyCenter.DataSource.SelectionCriteria selectionCriteria) {
+        public Task<RadioStation[]> GetRadioStationsAndSignalsAsync(SelectionCriteria selectionCriteria) {
             return base.Channel.GetRadioStationsAndSignalsAsync(selectionCriteria);
         }
     }
