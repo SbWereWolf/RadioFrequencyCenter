@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RadioFrequencyCenter" Class="RadioFrequencyCenterDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=FORGE-JITA\SQLEXPRESS2014;Initial Catalog=RadioFrequencyCenter;Integrated Security=True;Pooling=False" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RadioFrequencyCenterConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.BroadcastFrequencies" Member="BroadcastFrequencies">
-    <Type Name="BroadcastFrequencies">
+  <Table Name="dbo.StationFrequencies" Member="StationFrequencies">
+    <Type Name="StationFrequencies">
       <Column Name="ID_F" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="RES" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="TN" Type="System.Double" DbType="Real" CanBeNull="true" />
       <Column Name="RN" Type="System.Double" DbType="Real" CanBeNull="true" />
-      <Association Name="BroadcastStation_BroadcastFrequency" Member="BroadcastStations" Storage="_BroadcastStation" ThisKey="RES" OtherKey="ID_RES" Type="BroadcastStations" IsForeignKey="true" />
+      <Association Name="BroadcastStations_BroadcastFrequencies" Member="BroadcastStations" Storage="_BroadcastStation" ThisKey="RES" OtherKey="ID_RES" Type="BroadcastStations" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.BroadcastStations" Member="BroadcastStations">
@@ -23,7 +23,16 @@
       <Column Name="MAC" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Column Name="DEL_DATE" Type="System.DateTimeOffset" DbType="DateTimeOffset" CanBeNull="true" />
       <Column Name="UPDATE_DATE" Type="System.DateTimeOffset" DbType="DateTimeOffset" CanBeNull="true" />
-      <Association Name="BroadcastStation_BroadcastFrequency" Member="BroadcastFrequencies" ThisKey="ID_RES" OtherKey="RES" Type="BroadcastFrequencies" />
+      <Association Name="BroadcastStations_BroadcastFrequencies" Member="StationFrequencies" Storage="_BroadcastFrequencies" ThisKey="ID_RES" OtherKey="RES" Type="StationFrequencies" />
+    </Type>
+  </Table>
+  <Table Name="dbo.V_ResdbResUpdatedate" Member="V_ResdbResUpdatedates">
+    <Type Name="V_ResdbResUpdatedate">
+      <Column Name="ResGUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ID_RES" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UPDATE_DATE" Type="System.DateTimeOffset" DbType="DateTimeOffset" CanBeNull="true" />
+      <Column Name="FrqGUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ID_F" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

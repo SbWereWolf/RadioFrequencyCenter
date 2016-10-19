@@ -170,6 +170,7 @@
     <Compile Include="Controllers\CramDataController.cs" />
     <Compile Include="Controllers\RadioDeviceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DataAccessLayer\ResUpdatedatesRepository.cs" />
     <Compile Include="DataAccessLayer\BroadcastFrequenciesRepository.cs" />
     <Compile Include="DataAccessLayer\BroadcastStationsRepository.cs" />
     <Compile Include="DataAccessLayer\Repository.cs" />
@@ -177,7 +178,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CramData.cs" />
-    <Compile Include="Proxy\SignalFrequencies.cs" />
+    <Compile Include="Proxy\ResUpdatedates.cs" />
+    <Compile Include="Proxy\DeviceSignals.cs" />
     <Compile Include="Proxy\RadioDevices.cs" />
     <Compile Include="Models\RadioDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
