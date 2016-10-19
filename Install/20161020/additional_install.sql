@@ -1,3 +1,5 @@
+
+
 USE [RadioFrequencyCenter]
 GO
 
@@ -64,6 +66,9 @@ GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
+IF OBJECT_ID('dbo.V_ResdbResUpdatedate', 'U') IS NOT NULL 
+  DROP TABLE dbo.V_ResdbResUpdatedate;
 
 CREATE VIEW [dbo].[V_ResdbResUpdatedate]
 AS
