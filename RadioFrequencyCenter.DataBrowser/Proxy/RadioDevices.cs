@@ -433,19 +433,74 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
         }
 
 
-        public bool InsertStations(IEnumerable<RadioDevice> radioDevices)
+        public bool InsertStations(List<RadioDevice> radioDeviceCollection)
         {
             var result = false;
             
             var broadcastStationsRepository = Repository;
             if (broadcastStationsRepository != null)
             {
-                var broadcastStations = RadioDevicesToBroadcastStations(radioDevices);
+                var broadcastStations = RadioDevicesToBroadcastStations(radioDeviceCollection);
 
                 if (broadcastStations != null)
                 {
                     result = broadcastStationsRepository.InsertStations(broadcastStations);
                 }
+            }
+            var linkBroadcastStationsToResdbResList = new List<LinkBroadcastStationsToResdbRes>();
+            var linkBroadcastStationsToResdbFrqList = new List<LinkStationFrequenciesToResdbFrq>();
+            if (result)
+            {
+                if (radioDeviceCollection != null)
+                {
+                    
+                    foreach (var radioDevice in radioDeviceCollection)
+                    {
+                        if (radioDevice != null)
+                        {
+                            if (radioDevice.mayAddToDb())
+                            {
+                                if (radioDevice.RadioSignals != null)
+                                {
+                                    foreach (var radioSignal in radioDevice?.RadioSignals)
+                                    {
+                                        if (radioSignal?.Guid != null)
+                                        {
+                                            var linkBroadcastStationsToResdbFrq = new LinkStationFrequenciesToResdbFrq
+                                            {
+                                                GUID = radioSignal.Guid.Value,
+                                                ID_F = radioSignal.IdF
+                                            };
+                                            linkBroadcastStationsToResdbFrqList.Add(linkBroadcastStationsToResdbFrq);
+                                        }
+                                    }
+                                }
+                                if (radioDevice.Guid != null)
+                                {
+                                    var linkBroadcastStationsToResdbRes = new LinkBroadcastStationsToResdbRes
+                                    {
+                                        GUID = radioDevice.Guid.Value,
+                                        ID_RES = radioDevice.IdRes
+                                    };
+                                    linkBroadcastStationsToResdbResList.Add(linkBroadcastStationsToResdbRes);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            if (linkBroadcastStationsToResdbResList.Count>0)
+            {
+                var repository = new LinkBroadcastStationsToResdbResRepository();
+                var isSuccess = repository.InsertStations(linkBroadcastStationsToResdbResList);
+                result = result && isSuccess;
+            }
+            if (linkBroadcastStationsToResdbFrqList.Count > 0)
+            {
+                var repository = new LinkStationFrequenciesToResdbFrqRepository();
+                var isSuccess = repository.InsertFrequrencies(linkBroadcastStationsToResdbFrqList);
+                result = result && isSuccess;
             }
             return result;
         }
