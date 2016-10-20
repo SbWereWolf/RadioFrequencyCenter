@@ -27,13 +27,13 @@
         <classShapeMoniker Id="7897baab-061c-46dc-a451-5fdb5a64e3d4" />
       </nodes>
     </associationConnector>
-    <classShape Id="7ec64f76-003f-4888-b36f-a17c90567dd1" absoluteBounds="6.5, 3.625, 2, 1.1939925130208333">
+    <classShape Id="7ec64f76-003f-4888-b36f-a17c90567dd1" absoluteBounds="6.875, 3.625, 2, 1.1939925130208333">
       <DataClassMoniker Name="/RadioFrequencyCenterDataContext/LinkStationFrequenciesToResdbFrq" />
       <nestedChildShapes>
-        <elementListCompartment Id="4c1bd745-013b-436f-8a5c-528ba3db4ed8" absoluteBounds="6.5150000000000006, 4.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="4c1bd745-013b-436f-8a5c-528ba3db4ed8" absoluteBounds="6.8900000000000006, 4.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(7.875 : 2.32859537760417); (7.875 : 3.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.0625 : 2.32859537760417); (8.0625 : 3.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/RadioFrequencyCenterDataContext/StationFrequencies/StationFrequencies_LinkStationFrequenciesToResdbFrq" />
       <nodes>
         <classShapeMoniker Id="7897baab-061c-46dc-a451-5fdb5a64e3d4" />
@@ -46,8 +46,8 @@
         <elementListCompartment Id="67737b85-ecb3-457b-86b9-8bd8f305526d" absoluteBounds="9.765, 4.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(10.8125 : 3.7420068359375); (10.8125 : 4.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RadioFrequencyCenterDataContext/BroadcastStations/BroadcastStations_LinkBroadcastStationsToResdbRe" />
+    <associationConnector edgePoints="[(10.8125 : 3.7420068359375); (10.8125 : 4.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/RadioFrequencyCenterDataContext/BroadcastStations/BroadcastStations_LinkBroadcastStationsToResdbRes" />
       <nodes>
         <classShapeMoniker Id="f9c2dd73-d752-45e6-bb6d-cfb44fdf0c8c" />
         <classShapeMoniker Id="693bf6ee-a1aa-477c-8dc2-2e8423a30805" />

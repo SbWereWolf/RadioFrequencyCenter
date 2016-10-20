@@ -39,30 +39,30 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
             return result;
         }
 
-        public bool InsertStations(IEnumerable<BroadcastStations> stations)
-        {
-            var result = false;
-            var broadcastStations = BroadcastStations;
-            var context = broadcastStations?.Context;
+        //public bool InsertLinkToResdbRes(IEnumerable<BroadcastStations> stations)
+        //{
+        //    var result = false;
+        //    var broadcastStations = BroadcastStations;
+        //    var context = broadcastStations?.Context;
 
-            if (broadcastStations != null && context != null && stations != null)
-            {
-                broadcastStations.InsertAllOnSubmit(stations);
+        //    if (broadcastStations != null && context != null && stations != null)
+        //    {
+        //        broadcastStations.InsertAllOnSubmit(stations);
 
-                try
-                {
-                    context.SubmitChanges();
-                    result = true;
-                }
-                catch (Exception)
-                {
+        //        try
+        //        {
+        //            context.SubmitChanges();
+        //            result = true;
+        //        }
+        //        catch (Exception)
+        //        {
 
-                    // throw;
-                }
-            }
+        //            // throw;
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         public bool UpdateStation(BroadcastStations instance)
         {
@@ -118,29 +118,5 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 
             return result;
         }
-
-        public bool DeleteAllStation()
-        {
-            var result = false;
-
-            var stations = BroadcastStations;
-            var context = stations?.Context;
-            if (context != null)
-            {
-                stations.DeleteAllOnSubmit(stations);
-                try
-                {
-                    context.SubmitChanges();
-                    result = true;
-                }
-                catch (Exception)
-                {
-                    // throw;
-                }
-            }
-
-            return result;
-        }
-
     }
 }

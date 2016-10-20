@@ -174,7 +174,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             var stationsContext = broadcastStations?.Context;
 
             var frequencies = new DeviceSignals();
-            var broadcastFrequencies = frequencies.Repository?.BroadcastFrequencies;
+            var broadcastFrequencies = frequencies.Repository?.StationFrequencies;
             var frequenciesContext = broadcastFrequencies?.Context;
 
 
@@ -452,8 +452,6 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             var broadcastStationsRepository = Repository;
             if (broadcastStationsRepository != null && radioDeviceCollection != null )
             {
-                // var broadcastStationsCollection = BulkRadioDeviceToBroadcastStations(radioDeviceCollection);
-                
                 foreach (var radioDevice in radioDeviceCollection)
                 {
                     var broadcastStations = SingleRadioDeviceToBroadcastStations(radioDevice);
@@ -480,7 +478,11 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
                                             || radioDevice.RadioSignals[index].Res == 0) 
                                             && radioDevice.RadioSignals[index].Rn == stationFrequency.RN
                                             && radioDevice.RadioSignals[index].Tn == stationFrequency.TN
-                                            && !radioDevice.RadioSignals.Any(x=> x == null ? false : x.IdF == stationFrequency.ID_F )
+                                            && !radioDevice.RadioSignals.Any(
+                                                // ReSharper disable SimplifyConditionalTernaryExpression
+                                                x=> x == null ? false : x.IdF == stationFrequency.ID_F 
+                                                // ReSharper restore SimplifyConditionalTernaryExpression
+                                                )
                                             )
                                         {
                                             if (radioDevice.RadioSignals[index] != null)
@@ -504,8 +506,8 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
                 }
             }
 
-            var linkBroadcastStationsToResdbResList = new List<DataAccessLayer.LinkBroadcastStationsToResdbRes>();
-            var linkStationFrequenciesToResdbFrqList = new List<DataAccessLayer.LinkStationFrequenciesToResdbFrq>();
+            var linkToResdbResList = new List<DataAccessLayer.LinkBroadcastStationsToResdbRes>();
+            var linkToResdbFrqList = new List<DataAccessLayer.LinkStationFrequenciesToResdbFrq>();
 
             foreach (var deviceForInsert in radioDeviceListForInsert)
             {
@@ -522,7 +524,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
                                     GUID = radioSignal.Guid.Value,
                                     ID_F = radioSignal.IdF
                                 };
-                                linkStationFrequenciesToResdbFrqList.Add(linkBroadcastStationsToResdbFrq);
+                                linkToResdbFrqList.Add(linkBroadcastStationsToResdbFrq);
                             }
                         }
                     }
@@ -531,33 +533,33 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
                         GUID = deviceForInsert.Guid.Value,
                         ID_RES = deviceForInsert.IdRes
                     };
-                    linkBroadcastStationsToResdbResList.Add(linkBroadcastStationsToResdbRes);
+                    linkToResdbResList.Add(linkBroadcastStationsToResdbRes);
                 }
             }
 
-            if (linkBroadcastStationsToResdbResList.Count>0)
+            if (linkToResdbResList.Count>0)
             {
                 var repository = new LinkBroadcastStationsToResdbResRepository();
-                var isSuccess = repository.InsertStations(linkBroadcastStationsToResdbResList);
+                var isSuccess = repository.InsertLinkToResdbRes(linkToResdbResList);
                 result = result && isSuccess;
             }
-            if (linkStationFrequenciesToResdbFrqList.Count > 0)
+            if (linkToResdbFrqList.Count > 0)
             {
                 var repository = new LinkStationFrequenciesToResdbFrqRepository();
-                var isSuccess = repository.InsertFrequrencies(linkStationFrequenciesToResdbFrqList);
+                var isSuccess = repository.InsertLinkToResdbFrq(linkToResdbFrqList);
                 result = result && isSuccess;
             }
             return result;
         }
 
-        public bool UpdateStations(IEnumerable<RadioDevice> radioDevices)
+        public bool UpdateStations(IEnumerable<RadioDevice> radioDeviceCollection)
         {
             var result = false;
 
             var broadcastStationsRepository = Repository;
             if (broadcastStationsRepository != null)
             {
-                var broadcastStations = BulkRadioDeviceToBroadcastStations(radioDevices);
+                var broadcastStations = BulkRadioDeviceToBroadcastStations(radioDeviceCollection);
 
                 if (broadcastStations != null)
                 {
@@ -567,12 +569,12 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             return result;
         }
 
-        private static IEnumerable<BroadcastStations> BulkRadioDeviceToBroadcastStations(IEnumerable<RadioDevice> radioDevices)
+        private static IEnumerable<BroadcastStations> BulkRadioDeviceToBroadcastStations(IEnumerable<RadioDevice> radioDeviceCollection)
         {
             var broadcastStations = new EntitySet<BroadcastStations>();
-            if (radioDevices != null)
+            if (radioDeviceCollection != null)
             {
-                foreach (var device in radioDevices)
+                foreach (var device in radioDeviceCollection)
                 {
                     if (device != null)
                     {
@@ -588,7 +590,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             return broadcastStations;
         }
 
-        public static BroadcastStations SingleRadioDeviceToBroadcastStations(RadioDevice device)
+        private static BroadcastStations SingleRadioDeviceToBroadcastStations(RadioDevice device)
         {
             BroadcastStations station = null;
             if (device != null)

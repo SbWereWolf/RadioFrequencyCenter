@@ -4,12 +4,12 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
 {
     public class DeviceSignals
     {
-        public BroadcastFrequenciesRepository Repository { get; }
+        public StationFrequenciesRepository Repository { get; }
 
         public DeviceSignals()
         {
-            var broadcastFrequenciesRepository = new BroadcastFrequenciesRepository();
-            Repository = broadcastFrequenciesRepository;
+            var stationFrequenciesRepository = new StationFrequenciesRepository();
+            Repository = stationFrequenciesRepository;
         }
     }
 }

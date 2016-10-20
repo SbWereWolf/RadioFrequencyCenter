@@ -7,10 +7,6 @@ namespace RadioFrequencyCenter.DataBrowser
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            // ==
-
-            //
-
             if (bundles != null)
             {
                 bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

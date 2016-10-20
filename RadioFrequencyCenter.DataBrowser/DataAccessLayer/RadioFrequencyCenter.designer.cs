@@ -98,7 +98,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 			}
 		}
 		
-		public System.Data.Linq.Table<LinkStationFrequenciesToResdbFrq> LinkStationFrequenciesToResdbFrq
+		public System.Data.Linq.Table<LinkStationFrequenciesToResdbFrq> LinkStationFrequenciesToResdbFrqs
 		{
 			get
 			{
@@ -352,7 +352,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		
 		private System.Nullable<System.DateTimeOffset> _UPDATE_DATE;
 		
-		private EntitySet<StationFrequencies> _BroadcastFrequencies;
+		private EntitySet<StationFrequencies> _StationFrequencies;
 		
 		private EntityRef<LinkBroadcastStationsToResdbRes> _LinkBroadcastStationsToResdbRe;
 		
@@ -388,7 +388,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		
 		public BroadcastStations()
 		{
-			this._BroadcastFrequencies = new EntitySet<StationFrequencies>(new Action<StationFrequencies>(this.attach_BroadcastFrequencies), new Action<StationFrequencies>(this.detach_BroadcastFrequencies));
+			this._StationFrequencies = new EntitySet<StationFrequencies>(new Action<StationFrequencies>(this.attach_StationFrequencies), new Action<StationFrequencies>(this.detach_StationFrequencies));
 			this._LinkBroadcastStationsToResdbRe = default(EntityRef<LinkBroadcastStationsToResdbRes>);
 			OnCreated();
 		}
@@ -633,20 +633,20 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_StationFrequencies", Storage="_BroadcastFrequencies", ThisKey="ID_RES", OtherKey="RES")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_StationFrequencies", Storage="_StationFrequencies", ThisKey="ID_RES", OtherKey="RES")]
 		public EntitySet<StationFrequencies> StationFrequencies
 		{
 			get
 			{
-				return this._BroadcastFrequencies;
+				return this._StationFrequencies;
 			}
 			set
 			{
-				this._BroadcastFrequencies.Assign(value);
+				this._StationFrequencies.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_LinkBroadcastStationsToResdbRe", Storage="_LinkBroadcastStationsToResdbRe", ThisKey="ID_RES", OtherKey="ID_RES", IsUnique=true, IsForeignKey=false)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_LinkBroadcastStationsToResdbRes", Storage="_LinkBroadcastStationsToResdbRe", ThisKey="ID_RES", OtherKey="ID_RES", IsUnique=true, IsForeignKey=false)]
 		public LinkBroadcastStationsToResdbRes LinkBroadcastStationsToResdbRe
 		{
 			get
@@ -695,13 +695,13 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 			}
 		}
 		
-		private void attach_BroadcastFrequencies(StationFrequencies entity)
+		private void attach_StationFrequencies(StationFrequencies entity)
 		{
 			this.SendPropertyChanging();
 			entity.BroadcastStations = this;
 		}
 		
-		private void detach_BroadcastFrequencies(StationFrequencies entity)
+		private void detach_StationFrequencies(StationFrequencies entity)
 		{
 			this.SendPropertyChanging();
 			entity.BroadcastStations = null;
@@ -1006,7 +1006,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_LinkBroadcastStationsToResdbRe", Storage="_BroadcastStations", ThisKey="ID_RES", OtherKey="ID_RES", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_LinkBroadcastStationsToResdbRes", Storage="_BroadcastStations", ThisKey="ID_RES", OtherKey="ID_RES", IsForeignKey=true)]
 		public BroadcastStations BroadcastStations
 		{
 			get

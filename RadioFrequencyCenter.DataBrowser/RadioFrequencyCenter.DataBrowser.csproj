@@ -173,7 +173,7 @@
     <Compile Include="DataAccessLayer\LinkBroadcastStationsToResdbResRepository.cs" />
     <Compile Include="DataAccessLayer\LinkStationFrequenciesToResdbFrqRepository.cs" />
     <Compile Include="DataAccessLayer\ResUpdatedatesRepository.cs" />
-    <Compile Include="DataAccessLayer\BroadcastFrequenciesRepository.cs" />
+    <Compile Include="DataAccessLayer\StationFrequenciesRepository.cs" />
     <Compile Include="DataAccessLayer\BroadcastStationsRepository.cs" />
     <Compile Include="DataAccessLayer\Repository.cs" />
     <Compile Include="Global.asax.cs">
