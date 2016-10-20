@@ -62,7 +62,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
         {
             var result = false;
             long id;
-            var isIdDefined = long.TryParse(recordId, out id);
+            var isIdDefined = Int64.TryParse(recordId, out id);
             if (isIdDefined)
             {
                 var proxy = new RadioDevices();
@@ -115,6 +115,12 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                 allRecords = radioDevices.FetchRecords();
             }
             return allRecords;
+        }
+
+        public bool mayAddToDb()
+        {
+            var result = Guid != null;
+            return result;
         }
     }
 }

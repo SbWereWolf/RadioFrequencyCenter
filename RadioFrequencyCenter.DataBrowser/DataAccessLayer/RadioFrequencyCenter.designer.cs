@@ -36,6 +36,12 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
     partial void InsertBroadcastStations(BroadcastStations instance);
     partial void UpdateBroadcastStations(BroadcastStations instance);
     partial void DeleteBroadcastStations(BroadcastStations instance);
+    partial void InsertLinkStationFrequenciesToResdbFrq(LinkStationFrequenciesToResdbFrq instance);
+    partial void UpdateLinkStationFrequenciesToResdbFrq(LinkStationFrequenciesToResdbFrq instance);
+    partial void DeleteLinkStationFrequenciesToResdbFrq(LinkStationFrequenciesToResdbFrq instance);
+    partial void InsertLinkBroadcastStationsToResdbRes(LinkBroadcastStationsToResdbRes instance);
+    partial void UpdateLinkBroadcastStationsToResdbRes(LinkBroadcastStationsToResdbRes instance);
+    partial void DeleteLinkBroadcastStationsToResdbRes(LinkBroadcastStationsToResdbRes instance);
     #endregion
 		
 		public RadioFrequencyCenterDataContext() : 
@@ -91,6 +97,22 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 				return this.GetTable<V_ResdbResUpdatedate>();
 			}
 		}
+		
+		public System.Data.Linq.Table<LinkStationFrequenciesToResdbFrq> LinkStationFrequenciesToResdbFrq
+		{
+			get
+			{
+				return this.GetTable<LinkStationFrequenciesToResdbFrq>();
+			}
+		}
+		
+		public System.Data.Linq.Table<LinkBroadcastStationsToResdbRes> LinkBroadcastStationsToResdbRes
+		{
+			get
+			{
+				return this.GetTable<LinkBroadcastStationsToResdbRes>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.StationFrequencies")]
@@ -106,6 +128,8 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		private System.Nullable<double> _TN;
 		
 		private System.Nullable<double> _RN;
+		
+		private EntityRef<LinkStationFrequenciesToResdbFrq> _LinkStationFrequenciesToResdbFrq;
 		
 		private EntityRef<BroadcastStations> _BroadcastStation;
 		
@@ -125,6 +149,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		
 		public StationFrequencies()
 		{
+			this._LinkStationFrequenciesToResdbFrq = default(EntityRef<LinkStationFrequenciesToResdbFrq>);
 			this._BroadcastStation = default(EntityRef<BroadcastStations>);
 			OnCreated();
 		}
@@ -213,7 +238,36 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_BroadcastFrequencies", Storage="_BroadcastStation", ThisKey="RES", OtherKey="ID_RES", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="StationFrequencies_LinkStationFrequenciesToResdbFrq", Storage="_LinkStationFrequenciesToResdbFrq", ThisKey="ID_F", OtherKey="ID_F", IsUnique=true, IsForeignKey=false)]
+		public LinkStationFrequenciesToResdbFrq LinkStationFrequenciesToResdbFrq
+		{
+			get
+			{
+				return this._LinkStationFrequenciesToResdbFrq.Entity;
+			}
+			set
+			{
+				LinkStationFrequenciesToResdbFrq previousValue = this._LinkStationFrequenciesToResdbFrq.Entity;
+				if (((previousValue != value) 
+							|| (this._LinkStationFrequenciesToResdbFrq.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LinkStationFrequenciesToResdbFrq.Entity = null;
+						previousValue.StationFrequencies = null;
+					}
+					this._LinkStationFrequenciesToResdbFrq.Entity = value;
+					if ((value != null))
+					{
+						value.StationFrequencies = this;
+					}
+					this.SendPropertyChanged("LinkStationFrequenciesToResdbFrq");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_StationFrequencies", Storage="_BroadcastStation", ThisKey="RES", OtherKey="ID_RES", IsForeignKey=true)]
 		public BroadcastStations BroadcastStations
 		{
 			get
@@ -300,6 +354,8 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		
 		private EntitySet<StationFrequencies> _BroadcastFrequencies;
 		
+		private EntityRef<LinkBroadcastStationsToResdbRes> _LinkBroadcastStationsToResdbRe;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -333,6 +389,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 		public BroadcastStations()
 		{
 			this._BroadcastFrequencies = new EntitySet<StationFrequencies>(new Action<StationFrequencies>(this.attach_BroadcastFrequencies), new Action<StationFrequencies>(this.detach_BroadcastFrequencies));
+			this._LinkBroadcastStationsToResdbRe = default(EntityRef<LinkBroadcastStationsToResdbRes>);
 			OnCreated();
 		}
 		
@@ -576,7 +633,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_BroadcastFrequencies", Storage="_BroadcastFrequencies", ThisKey="ID_RES", OtherKey="RES")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_StationFrequencies", Storage="_BroadcastFrequencies", ThisKey="ID_RES", OtherKey="RES")]
 		public EntitySet<StationFrequencies> StationFrequencies
 		{
 			get
@@ -586,6 +643,35 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 			set
 			{
 				this._BroadcastFrequencies.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_LinkBroadcastStationsToResdbRe", Storage="_LinkBroadcastStationsToResdbRe", ThisKey="ID_RES", OtherKey="ID_RES", IsUnique=true, IsForeignKey=false)]
+		public LinkBroadcastStationsToResdbRes LinkBroadcastStationsToResdbRe
+		{
+			get
+			{
+				return this._LinkBroadcastStationsToResdbRe.Entity;
+			}
+			set
+			{
+				LinkBroadcastStationsToResdbRes previousValue = this._LinkBroadcastStationsToResdbRe.Entity;
+				if (((previousValue != value) 
+							|| (this._LinkBroadcastStationsToResdbRe.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LinkBroadcastStationsToResdbRe.Entity = null;
+						previousValue.BroadcastStations = null;
+					}
+					this._LinkBroadcastStationsToResdbRe.Entity = value;
+					if ((value != null))
+					{
+						value.BroadcastStations = this;
+					}
+					this.SendPropertyChanged("LinkBroadcastStationsToResdbRe");
+				}
 			}
 		}
 		
@@ -717,6 +803,260 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 				{
 					this._ID_F = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LinkStationFrequenciesToResdbFrq")]
+	public partial class LinkStationFrequenciesToResdbFrq : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID_F;
+		
+		private System.Guid _GUID;
+		
+		private EntityRef<StationFrequencies> _StationFrequencies;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_FChanging(long value);
+    partial void OnID_FChanged();
+    partial void OnGUIDChanging(System.Guid value);
+    partial void OnGUIDChanged();
+    #endregion
+		
+		public LinkStationFrequenciesToResdbFrq()
+		{
+			this._StationFrequencies = default(EntityRef<StationFrequencies>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_F", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long ID_F
+		{
+			get
+			{
+				return this._ID_F;
+			}
+			set
+			{
+				if ((this._ID_F != value))
+				{
+					if (this._StationFrequencies.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_FChanging(value);
+					this.SendPropertyChanging();
+					this._ID_F = value;
+					this.SendPropertyChanged("ID_F");
+					this.OnID_FChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid GUID
+		{
+			get
+			{
+				return this._GUID;
+			}
+			set
+			{
+				if ((this._GUID != value))
+				{
+					this.OnGUIDChanging(value);
+					this.SendPropertyChanging();
+					this._GUID = value;
+					this.SendPropertyChanged("GUID");
+					this.OnGUIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="StationFrequencies_LinkStationFrequenciesToResdbFrq", Storage="_StationFrequencies", ThisKey="ID_F", OtherKey="ID_F", IsForeignKey=true)]
+		public StationFrequencies StationFrequencies
+		{
+			get
+			{
+				return this._StationFrequencies.Entity;
+			}
+			set
+			{
+				StationFrequencies previousValue = this._StationFrequencies.Entity;
+				if (((previousValue != value) 
+							|| (this._StationFrequencies.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._StationFrequencies.Entity = null;
+						previousValue.LinkStationFrequenciesToResdbFrq = null;
+					}
+					this._StationFrequencies.Entity = value;
+					if ((value != null))
+					{
+						value.LinkStationFrequenciesToResdbFrq = this;
+						this._ID_F = value.ID_F;
+					}
+					else
+					{
+						this._ID_F = default(long);
+					}
+					this.SendPropertyChanged("StationFrequencies");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LinkBroadcastStationsToResdbRes")]
+	public partial class LinkBroadcastStationsToResdbRes : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID_RES;
+		
+		private System.Guid _GUID;
+		
+		private EntityRef<BroadcastStations> _BroadcastStations;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnID_RESChanging(long value);
+    partial void OnID_RESChanged();
+    partial void OnGUIDChanging(System.Guid value);
+    partial void OnGUIDChanged();
+    #endregion
+		
+		public LinkBroadcastStationsToResdbRes()
+		{
+			this._BroadcastStations = default(EntityRef<BroadcastStations>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_RES", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long ID_RES
+		{
+			get
+			{
+				return this._ID_RES;
+			}
+			set
+			{
+				if ((this._ID_RES != value))
+				{
+					if (this._BroadcastStations.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnID_RESChanging(value);
+					this.SendPropertyChanging();
+					this._ID_RES = value;
+					this.SendPropertyChanged("ID_RES");
+					this.OnID_RESChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid GUID
+		{
+			get
+			{
+				return this._GUID;
+			}
+			set
+			{
+				if ((this._GUID != value))
+				{
+					this.OnGUIDChanging(value);
+					this.SendPropertyChanging();
+					this._GUID = value;
+					this.SendPropertyChanged("GUID");
+					this.OnGUIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BroadcastStations_LinkBroadcastStationsToResdbRe", Storage="_BroadcastStations", ThisKey="ID_RES", OtherKey="ID_RES", IsForeignKey=true)]
+		public BroadcastStations BroadcastStations
+		{
+			get
+			{
+				return this._BroadcastStations.Entity;
+			}
+			set
+			{
+				BroadcastStations previousValue = this._BroadcastStations.Entity;
+				if (((previousValue != value) 
+							|| (this._BroadcastStations.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BroadcastStations.Entity = null;
+						previousValue.LinkBroadcastStationsToResdbRe = null;
+					}
+					this._BroadcastStations.Entity = value;
+					if ((value != null))
+					{
+						value.LinkBroadcastStationsToResdbRe = this;
+						this._ID_RES = value.ID_RES;
+					}
+					else
+					{
+						this._ID_RES = default(long);
+					}
+					this.SendPropertyChanged("BroadcastStations");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
