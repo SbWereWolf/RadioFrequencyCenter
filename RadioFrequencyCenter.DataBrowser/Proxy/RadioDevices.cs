@@ -177,15 +177,28 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             var broadcastFrequencies = frequencies.Repository?.BroadcastFrequencies;
             var frequenciesContext = broadcastFrequencies?.Context;
 
-            if (stationsContext != null && frequenciesContext != null )
+
+            var linkStationFrequenciesToResdbFrq = new LinkStationFrequenciesToResdbFrq();
+            var linkStationFrequencies = linkStationFrequenciesToResdbFrq.Repository?.LinkStationFrequenciesToResdbFrq;
+            var linkStationFrequenciesContext = linkStationFrequencies?.Context;
+
+
+            var linkBroadcastStationsToResdbRes = new LinkBroadcastStationsToResdbRes();
+            var linkBroadcastStations = linkBroadcastStationsToResdbRes.Repository?.LinkBroadcastStationsToResdbRes;
+            var linkBroadcastStationsContext = linkBroadcastStations?.Context;
+
+            if (stationsContext != null && frequenciesContext != null && linkStationFrequenciesContext != null && linkBroadcastStationsContext != null)
             {
+                linkStationFrequencies.DeleteAllOnSubmit(linkStationFrequencies.ToArray());
                 broadcastFrequencies.DeleteAllOnSubmit(broadcastFrequencies.ToArray());
+                linkBroadcastStations.DeleteAllOnSubmit(linkBroadcastStations.ToArray());
                 broadcastStations.DeleteAllOnSubmit(broadcastStations.ToArray());
 
                 try
                 {
-                    
+                    linkStationFrequenciesContext.SubmitChanges();
                     frequenciesContext.SubmitChanges();
+                    linkBroadcastStationsContext.SubmitChanges();
                     stationsContext.SubmitChanges();
                     result = true;
                 }
@@ -432,74 +445,106 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             return device;
         }
 
-
         public bool InsertStations(List<RadioDevice> radioDeviceCollection)
         {
-            var result = false;
-            
+            var result = true;
+            var radioDeviceListForInsert = new List<RadioDevice>();
             var broadcastStationsRepository = Repository;
-            if (broadcastStationsRepository != null)
+            if (broadcastStationsRepository != null && radioDeviceCollection != null )
             {
-                var broadcastStations = RadioDevicesToBroadcastStations(radioDeviceCollection);
-
-                if (broadcastStations != null)
+                // var broadcastStationsCollection = BulkRadioDeviceToBroadcastStations(radioDeviceCollection);
+                
+                foreach (var radioDevice in radioDeviceCollection)
                 {
-                    result = broadcastStationsRepository.InsertStations(broadcastStations);
-                }
-            }
-            var linkBroadcastStationsToResdbResList = new List<LinkBroadcastStationsToResdbRes>();
-            var linkBroadcastStationsToResdbFrqList = new List<LinkStationFrequenciesToResdbFrq>();
-            if (result)
-            {
-                if (radioDeviceCollection != null)
-                {
-                    
-                    foreach (var radioDevice in radioDeviceCollection)
+                    var broadcastStations = SingleRadioDeviceToBroadcastStations(radioDevice);
+                    var isSuccess = broadcastStationsRepository.InsertStation(broadcastStations);
+                    var isIdResSet = false;
+                    if (isSuccess && radioDevice  != null && broadcastStations != null )
                     {
-                        if (radioDevice != null)
+                        radioDevice.IdRes = broadcastStations.ID_RES;
+                        isIdResSet = true;
+                    }
+                    var stationFrequencies = broadcastStations?.StationFrequencies; 
+                    if (radioDevice?.RadioSignals != null && isIdResSet && stationFrequencies != null )
+                    {
+                        var radioSignalsUpperBound = radioDevice.RadioSignals.GetUpperBound(0);
+                        foreach (var stationFrequency in stationFrequencies)
                         {
-                            if (radioDevice.mayAddToDb())
+                            if ( stationFrequency != null )
                             {
-                                if (radioDevice.RadioSignals != null)
+                                for (int index = 0; index <= radioSignalsUpperBound; index++)
                                 {
-                                    foreach (var radioSignal in radioDevice?.RadioSignals)
+                                    if (radioDevice.RadioSignals[index] != null)
                                     {
-                                        if (radioSignal?.Guid != null)
+                                        if ( (radioDevice.RadioSignals[index].IdF == 0 
+                                            || radioDevice.RadioSignals[index].Res == 0) 
+                                            && radioDevice.RadioSignals[index].Rn == stationFrequency.RN
+                                            && radioDevice.RadioSignals[index].Tn == stationFrequency.TN
+                                            && !radioDevice.RadioSignals.Any(x=> x == null ? false : x.IdF == stationFrequency.ID_F )
+                                            )
                                         {
-                                            var linkBroadcastStationsToResdbFrq = new LinkStationFrequenciesToResdbFrq
+                                            if (radioDevice.RadioSignals[index] != null)
                                             {
-                                                GUID = radioSignal.Guid.Value,
-                                                ID_F = radioSignal.IdF
-                                            };
-                                            linkBroadcastStationsToResdbFrqList.Add(linkBroadcastStationsToResdbFrq);
+                                                radioDevice.RadioSignals[index].IdF = stationFrequency.ID_F;
+                                                radioDevice.RadioSignals[index].Res = stationFrequency.RES;
+                                                break;
+                                            }
                                         }
                                     }
                                 }
-                                if (radioDevice.Guid != null)
-                                {
-                                    var linkBroadcastStationsToResdbRes = new LinkBroadcastStationsToResdbRes
-                                    {
-                                        GUID = radioDevice.Guid.Value,
-                                        ID_RES = radioDevice.IdRes
-                                    };
-                                    linkBroadcastStationsToResdbResList.Add(linkBroadcastStationsToResdbRes);
-                                }
                             }
                         }
-
                     }
+
+                    if(isIdResSet)
+                    {
+                        radioDeviceListForInsert.Add(radioDevice);
+                    }
+                    result = result && isIdResSet;
                 }
             }
+
+            var linkBroadcastStationsToResdbResList = new List<DataAccessLayer.LinkBroadcastStationsToResdbRes>();
+            var linkStationFrequenciesToResdbFrqList = new List<DataAccessLayer.LinkStationFrequenciesToResdbFrq>();
+
+            foreach (var deviceForInsert in radioDeviceListForInsert)
+            {
+                if (deviceForInsert?.Guid != null)
+                {
+                    if (deviceForInsert.RadioSignals != null)
+                    {
+                        foreach (var radioSignal in deviceForInsert.RadioSignals)
+                        {
+                            if (radioSignal?.Guid != null)
+                            {
+                                var linkBroadcastStationsToResdbFrq = new DataAccessLayer.LinkStationFrequenciesToResdbFrq
+                                {
+                                    GUID = radioSignal.Guid.Value,
+                                    ID_F = radioSignal.IdF
+                                };
+                                linkStationFrequenciesToResdbFrqList.Add(linkBroadcastStationsToResdbFrq);
+                            }
+                        }
+                    }
+                    var linkBroadcastStationsToResdbRes = new DataAccessLayer.LinkBroadcastStationsToResdbRes
+                    {
+                        GUID = deviceForInsert.Guid.Value,
+                        ID_RES = deviceForInsert.IdRes
+                    };
+                    linkBroadcastStationsToResdbResList.Add(linkBroadcastStationsToResdbRes);
+                }
+            }
+
             if (linkBroadcastStationsToResdbResList.Count>0)
             {
                 var repository = new LinkBroadcastStationsToResdbResRepository();
                 var isSuccess = repository.InsertStations(linkBroadcastStationsToResdbResList);
                 result = result && isSuccess;
             }
-            if (linkBroadcastStationsToResdbFrqList.Count > 0)
+            if (linkStationFrequenciesToResdbFrqList.Count > 0)
             {
                 var repository = new LinkStationFrequenciesToResdbFrqRepository();
-                var isSuccess = repository.InsertFrequrencies(linkBroadcastStationsToResdbFrqList);
+                var isSuccess = repository.InsertFrequrencies(linkStationFrequenciesToResdbFrqList);
                 result = result && isSuccess;
             }
             return result;
@@ -512,7 +557,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             var broadcastStationsRepository = Repository;
             if (broadcastStationsRepository != null)
             {
-                var broadcastStations = RadioDevicesToBroadcastStations(radioDevices);
+                var broadcastStations = BulkRadioDeviceToBroadcastStations(radioDevices);
 
                 if (broadcastStations != null)
                 {
@@ -522,7 +567,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             return result;
         }
 
-        private static IEnumerable<BroadcastStations> RadioDevicesToBroadcastStations(IEnumerable<RadioDevice> radioDevices)
+        private static IEnumerable<BroadcastStations> BulkRadioDeviceToBroadcastStations(IEnumerable<RadioDevice> radioDevices)
         {
             var broadcastStations = new EntitySet<BroadcastStations>();
             if (radioDevices != null)
@@ -531,48 +576,61 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
                 {
                     if (device != null)
                     {
-                        var station = new BroadcastStations
-                        {
-                            DATE_SVID = device.DateSvid,
-                            DEL_DATE = device.DelDate,
-                            IDS = device.Ids,
-                            ID_RES = device.IdRes,
-                            LAT = device.Lat,
-                            LONG = device.Long,
-                            MAC = device.Mac,
-                            NUM_SVID = device.NumSvid,
-                            REGION = device.Region,
-                            SROK_SVID = device.SrokSvid,
-                            UPDATE_DATE = device.UpdateDate,
-                            ZAV_NUM = device.ZavNum
-                        };
+                        var station = SingleRadioDeviceToBroadcastStations(device);
 
-                        var radioSignals = device.RadioSignals;
-                        var length = radioSignals?.Length;
-                        var broadcastFrequencies = new EntitySet<StationFrequencies>();
-                        if (length > 0)
+                        if (station != null)
                         {
-                            foreach (var signal in radioSignals)
-                            {
-                                if (signal != null)
-                                {
-                                    var frequrency = new StationFrequencies
-                                    {
-                                        RN = signal.Rn,
-                                        TN = signal.Tn
-                                    };
-                                    broadcastFrequencies.Add(frequrency);
-                                }
-                            }
+                            broadcastStations.Add(station);
                         }
-
-                        station.StationFrequencies = broadcastFrequencies;
-
-                        broadcastStations.Add(station);
                     }
                 }
             }
             return broadcastStations;
+        }
+
+        public static BroadcastStations SingleRadioDeviceToBroadcastStations(RadioDevice device)
+        {
+            BroadcastStations station = null;
+            if (device != null)
+            {
+                station = new BroadcastStations
+                {
+                    DATE_SVID = device.DateSvid,
+                    DEL_DATE = device.DelDate,
+                    IDS = device.Ids,
+                    ID_RES = device.IdRes,
+                    LAT = device.Lat,
+                    LONG = device.Long,
+                    MAC = device.Mac,
+                    NUM_SVID = device.NumSvid,
+                    REGION = device.Region,
+                    SROK_SVID = device.SrokSvid,
+                    UPDATE_DATE = device.UpdateDate,
+                    ZAV_NUM = device.ZavNum
+                };
+
+                var broadcastFrequencies = new EntitySet<StationFrequencies>();
+                var radioSignals = device.RadioSignals;
+                var length = radioSignals?.Length;
+                if (length > 0)
+                {
+                    foreach (var signal in radioSignals)
+                    {
+                        if (signal != null)
+                        {
+                            var frequrency = new StationFrequencies
+                            {
+                                RN = signal.Rn,
+                                TN = signal.Tn
+                            };
+                            broadcastFrequencies.Add(frequrency);
+                        }
+                    }
+                }
+
+                station.StationFrequencies = broadcastFrequencies;
+            }
+            return station;
         }
 
         public DateTimeOffset? GetLastUpdateDate()
