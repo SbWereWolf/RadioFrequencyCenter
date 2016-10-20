@@ -180,6 +180,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CramData.cs" />
+    <Compile Include="Proxy\LinkStationFrequenciesToResdbFrq.cs" />
+    <Compile Include="Proxy\LinkBroadcastStationsToResdbRes.cs" />
     <Compile Include="Proxy\ResUpdatedates.cs" />
     <Compile Include="Proxy\DeviceSignals.cs" />
     <Compile Include="Proxy\RadioDevices.cs" />
