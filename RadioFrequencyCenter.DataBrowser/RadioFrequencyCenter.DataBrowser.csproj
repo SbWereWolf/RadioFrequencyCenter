@@ -170,6 +170,8 @@
     <Compile Include="Controllers\CramDataController.cs" />
     <Compile Include="Controllers\RadioDeviceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DataAccessLayer\LinkBroadcastStationsToResdbResRepository.cs" />
+    <Compile Include="DataAccessLayer\LinkStationFrequenciesToResdbFrqRepository.cs" />
     <Compile Include="DataAccessLayer\ResUpdatedatesRepository.cs" />
     <Compile Include="DataAccessLayer\BroadcastFrequenciesRepository.cs" />
     <Compile Include="DataAccessLayer\BroadcastStationsRepository.cs" />

@@ -78,8 +78,8 @@ namespace RadioFrequencyCenter.DataBrowser.Models
 
             var guidProxy = new ResUpdatedates();
 
-            var radioDevicesForUpdate = guidProxy.getForUpdate(radioDevices);
-            IEnumerable<RadioDevice> radioDevicesForInsert = guidProxy.GetForInsert(radioDevices);
+            var radioDevicesForUpdate = guidProxy.GetForUpdate(radioDevices);
+            List<RadioDevice> radioDevicesForInsert = guidProxy.GetForInsert(radioDevices);
 
 
             var devicesProxy = new RadioDevices();
@@ -97,7 +97,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
             {
                 if (radioDevicesForUpdate.Any())
                 {
-                    var isSuccess = devicesProxy.UpdateStations(radioDevicesForInsert);
+                    var isSuccess = devicesProxy.UpdateStations(radioDevicesForUpdate);
                     result = isSuccess && result;
                 }
             }

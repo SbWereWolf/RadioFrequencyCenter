@@ -18,9 +18,9 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             Repository = resUpdatedatesRepository;
         }
 
-        public IEnumerable<RadioDevice> getForUpdate(List<RadioDevice> radioDevicesList)
+        public List<RadioDevice> GetForUpdate(List<RadioDevice> radioDevicesList)
         {
-            IEnumerable<RadioDevice> radioDevices = null;
+            List<RadioDevice> radioDevices = null;
 
             var resUpdatedates = Repository?.ResUpdatedates;
             if (radioDevicesList != null && resUpdatedates != null)
@@ -28,10 +28,16 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
                 radioDevices =
                     radioDevicesList?.Where(
                         x =>
-                            x.UpdateDate <
-                            resUpdatedates.Where(y => y.ResGUID == x.Guid.Value)
-                                .Select(z => z.UPDATE_DATE)
-                                .FirstOrDefault());
+                            // ReSharper disable SimplifyConditionalTernaryExpression
+                            x == null
+                                ? false
+                                : x.UpdateDate <
+                                  resUpdatedates.Where(y => y.ResGUID == x.Guid.Value)
+                                      .Select(z => z.UPDATE_DATE)
+                                      .FirstOrDefault()
+                        // ReSharper restore SimplifyConditionalTernaryExpression
+                        ).ToList();
+
             }
 
             return radioDevices;
