@@ -112,6 +112,5 @@ namespace RadioFrequencyCenter.DataBrowser
         {
             Logger?.Info("Session End");
         }
-
     }
 }

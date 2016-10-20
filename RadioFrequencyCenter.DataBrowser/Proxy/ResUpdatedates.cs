@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
 using RadioFrequencyCenter.DataBrowser.DataAccessLayer;
 using RadioFrequencyCenter.DataBrowser.Models;
 
@@ -10,7 +7,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
 {
     public class ResUpdatedates
     {
-        public ResUpdatedatesRepository Repository { get; }
+        private ResUpdatedatesRepository Repository { get; }
 
         public ResUpdatedates()
         {
@@ -20,13 +17,13 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
 
         public List<RadioDevice> GetForUpdate(List<RadioDevice> radioDevicesList)
         {
-            List<RadioDevice> radioDevices = null;
+            List<RadioDevice> radioDeviceList = null;
 
             var resUpdatedates = Repository?.ResUpdatedates;
             if (radioDevicesList != null && resUpdatedates != null)
             {
-                radioDevices =
-                    radioDevicesList?.Where(
+                radioDeviceList =
+                    radioDevicesList.Where(
                         x =>
                             // ReSharper disable SimplifyConditionalTernaryExpression
                             x == null
@@ -40,7 +37,7 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
 
             }
 
-            return radioDevices;
+            return radioDeviceList;
         }
 
         public List<RadioDevice> GetForInsert(List<RadioDevice> radioDevicesList)
@@ -52,8 +49,6 @@ namespace RadioFrequencyCenter.DataBrowser.Proxy
             {
                 radioDevices =
                     radioDevicesList.Where(x => !resUpdatedates.Any(y => y.ResGUID == x.Guid.Value)).ToList();
-
-                
             }
             return radioDevices;
         }

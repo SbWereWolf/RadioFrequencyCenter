@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Linq;
-using System.Linq;
 
 namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
 {
@@ -9,12 +8,12 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
     {
         public LinkStationFrequenciesToResdbFrqRepository()
         {
-            LinkStationFrequenciesToResdbFrq = RepositoryData?.LinkStationFrequenciesToResdbFrq;
+            LinkStationFrequenciesToResdbFrq = RepositoryData?.LinkStationFrequenciesToResdbFrqs;
         }
 
         public Table<LinkStationFrequenciesToResdbFrq> LinkStationFrequenciesToResdbFrq { get; }
 
-        public bool InsertStation(LinkStationFrequenciesToResdbFrq instance)
+        public bool InsertlinkToResdbFrq(LinkStationFrequenciesToResdbFrq instance)
         {
             var result = false;
             var linkStationFrequenciesToResdbFrq = LinkStationFrequenciesToResdbFrq;
@@ -39,7 +38,7 @@ namespace RadioFrequencyCenter.DataBrowser.DataAccessLayer
             return result;
         }
 
-        public bool InsertFrequrencies(IEnumerable<LinkStationFrequenciesToResdbFrq> stations)
+        public bool InsertLinkToResdbFrq(IEnumerable<LinkStationFrequenciesToResdbFrq> stations)
         {
             var result = false;
             var linkStationFrequenciesToResdbFrq = LinkStationFrequenciesToResdbFrq;

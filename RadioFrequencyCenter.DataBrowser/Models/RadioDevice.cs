@@ -34,7 +34,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
             //{
             //    var frequencyRecords = new List<DeviceSignal>();
 
-            //    var broadcastFrequencies = instance?.BroadcastFrequencies;
+            //    var broadcastFrequencies = instance?.StationFrequencies;
             //    if (instance != null && broadcastFrequencies!= null)
             //    {
             //        var repositoryData = broadcastFrequencies.ToArray();
@@ -62,7 +62,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
         {
             var result = false;
             long id;
-            var isIdDefined = Int64.TryParse(recordId, out id);
+            var isIdDefined = long.TryParse(recordId, out id);
             if (isIdDefined)
             {
                 var proxy = new RadioDevices();
@@ -94,7 +94,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
         public static bool DeleteAllRecords()
         {
             var proxy = new RadioDevices();
-            bool result = proxy.DeleteAll();
+            var result = proxy.DeleteAll();
 
             return result;
         }
@@ -104,7 +104,6 @@ namespace RadioFrequencyCenter.DataBrowser.Models
             RadioDevices radioDevices = null;
             if (requestForm != null)
             {
-                //var requestForm = Request.Form;
                 radioDevices = new RadioDevices();
                 radioDevices.Criteria?.DefineCriteria(requestForm);
             }
@@ -115,12 +114,6 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                 allRecords = radioDevices.FetchRecords();
             }
             return allRecords;
-        }
-
-        public bool mayAddToDb()
-        {
-            var result = Guid != null;
-            return result;
         }
     }
 }

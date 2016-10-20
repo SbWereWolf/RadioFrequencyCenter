@@ -26,16 +26,16 @@ namespace RadioFrequencyCenter.DataBrowser.Controllers
         }
         public ActionResult RecordPage(string id)
         {
-            var broadcastStation = new RadioDevice();
-            broadcastStation.Boot(id);
-            var view = View(broadcastStation);
+            var radioDevice = new RadioDevice();
+            radioDevice.Boot(id);
+            var view = View(radioDevice);
             return view;
         }
         public ActionResult RecordPopup(string id)
         {
-            var broadcastStation = new RadioDevice();
-            broadcastStation.Boot(id);
-            var view = View(broadcastStation);
+            var radioDevice = new RadioDevice();
+            radioDevice.Boot(id);
+            var view = View(radioDevice);
             return view;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using Microsoft.Ajax.Utilities;
 using RadioFrequencyCenter.DataBrowser.MeasurementsApiService;
@@ -16,7 +17,7 @@ namespace RadioFrequencyCenter.DataBrowser.Models
 
         public SelectionCriteria SelectionCriteria { get; set;  }
 
-        public bool GetIt()
+        private bool GetIt()
         {
             var result = false;
             var apiClient = new MeasurementsApiClient();
@@ -102,6 +103,51 @@ namespace RadioFrequencyCenter.DataBrowser.Models
                 }
             }
 
+            return result;
+        }
+
+        public bool NewerOnly()
+        {
+            var proxy = new RadioDevices();
+            var dateupdate = proxy.GetLastUpdateDate();
+            
+            var stationCriteria = SelectionCriteria?.Station;
+            if (stationCriteria != null && dateupdate.HasValue)
+            {
+                stationCriteria.UpdateDate = dateupdate.Value.LocalDateTime;
+            }
+            var result = GetIt();
+            return result;
+        }
+        public bool WholeData()
+        {
+            var result = GetIt();
+            return result;
+        }
+
+        public bool DevicesByParameters(NameValueCollection requestForm)
+        {
+            var result = false;
+            if (requestForm != null)
+            {
+                var certificatenumber = requestForm["SelectionCriteria.Station.CertificateNumber"];
+                var factorynumber = requestForm["SelectionCriteria.Station.FactoryNumber"];
+                
+                var selectionCriteria = SelectionCriteria?.Station;
+                if (selectionCriteria != null)
+                {
+                    selectionCriteria.CertificateNumber = certificatenumber;
+                    selectionCriteria.FactoryNumber = null;
+                    int factoryNumberInt;
+                    var isConverted = int.TryParse(factorynumber, out factoryNumberInt);
+                    if (isConverted)
+                    {
+                        selectionCriteria.FactoryNumber = factoryNumberInt;
+                    }
+                }
+
+                result = GetIt();
+            }
             return result;
         }
     }
